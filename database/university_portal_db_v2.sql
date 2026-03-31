@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2026 at 09:41 PM
+-- Generation Time: Apr 01, 2026 at 01:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -59,7 +59,8 @@ INSERT INTO `attendance` (`id`, `user_id`, `session_id`, `status`, `scaned_at`) 
 (0, 2, 27, 'present', '2026-03-30 19:25:15'),
 (0, 2, 27, 'present', '2026-03-30 19:25:15'),
 (0, 2, 27, 'present', '2026-03-30 19:25:15'),
-(0, 2, 27, 'present', '2026-03-30 19:25:15');
+(0, 2, 27, 'present', '2026-03-30 19:25:15'),
+(0, 2, 30, 'present', '2026-03-31 20:40:31');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,11 @@ INSERT INTO `attendance_session` (`id`, `user_id`, `qr_token`, `created_at`) VAL
 (24, 1, '7d586f3ab808e0822ce4ff2ca9c2c9935f6f94bb36fff397476f514600721595', '2026-03-30 17:52:47'),
 (25, 1, '5830ac77a67277f8cab799c6c6e595016e52bc43d5d5d38ef843f4a2febaa471', '2026-03-30 17:53:35'),
 (26, 1, 'b5e46252367d49f6b7fcea3f14e310ea6e77d43b0f1c5d947f9f7b1f67e9b163', '2026-03-30 18:00:38'),
-(27, 1, '1681539f40e8e26e6f444ae10f5e4829517d118af7095f9e73e96814a4bf9c1b', '2026-03-30 18:43:50');
+(27, 1, '1681539f40e8e26e6f444ae10f5e4829517d118af7095f9e73e96814a4bf9c1b', '2026-03-30 18:43:50'),
+(28, 1, '5ddecc2be6b3bb19f5869bc33fa27859d403640824bf2277fd6bf14d41c0d9de', '2026-03-31 20:38:21'),
+(29, 1, '0d8d08fa7c2da0c1ae4d5f9f4ed8ca0b7c20d666c3638a436258c5f907254738', '2026-03-31 20:38:39'),
+(30, 1, '2495113d61eff33765fbfa0d7722e69c087c3a94813fc956452777c7e1835b15', '2026-03-31 20:39:03'),
+(31, 1, 'b8a835900d84cd6f4c0132032854ba412fb900c5abce075987f5e526bf0190db', '2026-03-31 20:41:20');
 
 -- --------------------------------------------------------
 
@@ -137,8 +142,20 @@ CREATE TABLE `notes` (
   `student_id` int(11) NOT NULL,
   `module_id` int(11) NOT NULL,
   `value` float NOT NULL,
-  `type` varchar(20) NOT NULL,
+  `type` enum('exam','td') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_modules`
+--
+
+CREATE TABLE `student_modules` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `module_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -151,7 +168,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL COMMENT 'technical id for the db',
   `identifier` varchar(20) NOT NULL COMMENT 'employee id/ matricule',
   `password` varchar(255) NOT NULL,
-  `role` varchar(20) NOT NULL,
+  `role` enum('student','teacher','admin') NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -164,7 +181,17 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `identifier`, `password`, `role`, `first_name`, `last_name`, `email`, `created`) VALUES
 (1, 'S001', '1234', 'student', 'ali', 'ben', 'ali@test.com', '2026-03-25 09:37:54'),
-(2, 'T001', '1234', 'teacher', 'sara', 'prof', 'sara@test.com', '2026-03-25 09:39:32');
+(2, 'teacher6', 'password123', 'teacher', 'sara', 'jenner', 'sara@test.com', '2026-03-31 22:38:59'),
+(3, 'teacher1', 'password123', 'teacher', 'alice', 'smith', 'alice@test.com', '2026-03-31 22:32:16'),
+(4, 'teacher1', 'password123', 'teacher', 'alice', 'smith', 'alice@test.com', '2026-03-31 22:35:09'),
+(5, 'teacher2', 'password123', 'teacher', 'Bob', 'Johnson', 'bob@example.com', '2026-03-31 22:35:09'),
+(6, 'teacher3', 'password123', 'teacher', 'Charlie', 'Brown', 'charlie@example.com', '2026-03-31 22:35:09'),
+(7, 'teacher4', 'password123', 'teacher', 'Diana', 'Williams', 'diana@example.com', '2026-03-31 22:35:09'),
+(8, 'teacher5', 'password123', 'teacher', 'Edward', 'Jones', 'edward@example.com', '2026-03-31 22:35:09'),
+(9, 'teacher2', 'password123', 'teacher', 'Bob', 'Johnson', 'bob@test.com', '2026-03-31 22:36:14'),
+(10, 'teacher3', 'password123', 'teacher', 'Charlie', 'Brown', 'charlie@test.com', '2026-03-31 22:36:14'),
+(11, 'teacher4', 'password123', 'teacher', 'Diana', 'Williams', 'diana@test.com', '2026-03-31 22:36:14'),
+(12, 'teacher5', 'password123', 'teacher', 'Edward', 'Jones', 'edward@test.com', '2026-03-31 22:36:14');
 
 --
 -- Indexes for dumped tables
@@ -214,6 +241,14 @@ ALTER TABLE `notes`
   ADD KEY `module_id` (`module_id`);
 
 --
+-- Indexes for table `student_modules`
+--
+ALTER TABLE `student_modules`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `module_id` (`module_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -228,7 +263,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendance_session`
 --
 ALTER TABLE `attendance_session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `enrollments`
@@ -249,10 +284,16 @@ ALTER TABLE `notes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `student_modules`
+--
+ALTER TABLE `student_modules`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'technical id for the db', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'technical id for the db', AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -296,6 +337,13 @@ ALTER TABLE `modules`
 ALTER TABLE `notes`
   ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `modules` (`id`);
+
+--
+-- Constraints for table `student_modules`
+--
+ALTER TABLE `student_modules`
+  ADD CONSTRAINT `student_modules_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `student_modules_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `modules` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

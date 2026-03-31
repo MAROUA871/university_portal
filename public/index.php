@@ -1,14 +1,11 @@
 <?php
 session_start();
-
-// TEMPORARY FAKE LOGIN (remove later)
-$_SESSION['user_id'] = 1;
-$_SESSION['role'] = 'admin';
-
-echo "University Portal is running<br>";
-
-// Database connection
-include(__DIR__ . "/../config/bd.php");
-
-echo "Database connected!";
 ?>
+
+<h1>University Portal</h1>
+
+<h2>Teacher</h2>
+<a href="start_session.php">Start Attendance Session</a>
+
+<h2>Student</h2>
+<p>Scan the QR code provided by your teacher</p>
