@@ -1,13 +1,16 @@
 <?php
-$host = "localhost";
-$bd_name = "university_portal_db";
-$username = "root";  
-$password = "";      
+// config/bd.php
 
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$bd_name", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "university_portal_db_v2";
+
+// créer la connexion
+$conn = mysqli_connect($host, $username, $password, $dbname);
+
+// vérifier la connexion
+if (!$conn) {
+    die("Erreur de connexion : " . mysqli_connect_error());
 }
 ?>
