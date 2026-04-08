@@ -1,39 +1,114 @@
+<?php
+/*
+    Récupérer le rôle depuis l'URL
+    Exemple : login.php?role=student
+*/
+$role = isset($_GET['role']) ? $_GET['role'] : '';
+
+/*
+    Titre par défaut
+*/
+$titre = "Connexion";
+$role_label = "";
+
+/*
+    Changer le titre selon le rôle
+*/
+if ($role == 'student') {
+    $titre = "Student Portal";
+    $role_label = "Role selected: Student";
+} elseif ($role == 'teacher') {
+    $titre = "Teacher Portal";
+    $role_label = "Role selected: Teacher";
+} elseif ($role == 'admin') {
+    $titre = "Admin Portal";
+    $role_label = "Role selected: Admin";
+}
+
+/*
+    Gestion des erreurs
+*/
+$message_erreur = "";
+
+if (isset($_GET["error"])) {
+    if ($_GET["error"] == 1) {
+        $message_erreur = "Utilisateur non trouvé.";
+    } elseif ($_GET["error"] == 2) {
+        $message_erreur = "Mot de passe incorrect.";
+    } elseif ($_GET["error"] == 3) {
+        $message_erreur = "Rôle inconnu.";
+    } elseif ($_GET["error"] == 4) {
+        $message_erreur = "Ce compte ne correspond pas au rôle sélectionné.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $titre; ?></title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<div class="container">
-    <h2>Connexion</h2>
-    
 
-    <form method="POST" action="../app/controllers/AuthController.php">
-        
-        <label for="identifier">Identifiant :</label><br>
-        <input type="text" name="identifier" id="identifier" required><br><br>
+<div class="login-page">
+    <div class="login-card">
 
-        <label for="password">Mot de passe :</label><br>
-        <input type="password" name="password" id="password" required><br><br>
+        <div class="login-logo-box">
+            <img src="assets/logo_progress.png" alt="Logo PROGRES" class="login-logo">
+        </div>
 
-        <button class="btn" type="submit">Se connecter</button>
-       
-    </form>
-     <a class="small-link" href="accueil.php">Retour à l'accueil</a>
+        <!-- Texte arabe -->
+        <p class="login-ar" dir="rtl">
+            وزارة التعليم العالي والبحث العلمي
+        </p>
+
+        <!-- Texte français -->
+        <p class="login-fr">
+            Ministère de l’Enseignement Supérieur et de la Recherche Scientifique
+        </p>
+
+        <!-- Titre du portail -->
+        <h2 class="login-title"><?php echo $titre; ?></h2>
+
+        <!-- Rôle sélectionné -->
+        <?php if (!empty($role_label)) : ?>
+            <p class="role-badge"><?php echo $role_label; ?></p>
+        <?php endif; ?>
+
+        <!-- Message d'erreur -->
+        <?php if (!empty($message_erreur)) : ?>
+            <div class="error-message">
+                <?php echo $message_erreur; ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Formulaire -->
+        <form method="POST" action="../app/controllers/AuthController.php" class="login-form">
+
+            <!-- Envoyer aussi le rôle au contrôleur -->
+            <input type="hidden" name="role" value="<?php echo htmlspecialchars($role); ?>">
+
+            <div class="form-group">
+                <label for="identifier">Identifiant</label>
+                <input type="text" name="identifier" id="identifier" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <button class="login-submit-btn" type="submit">Se connecter</button>
+        </form>
+
+        <div class="login-links">
+            <a class="small-link" href="accueil.php">Retour à l'accueil</a>
+        </div>
+
+    </div>
 </div>
-    <?php
-// Afficher les messages d'erreur selon la valeur de error
-if (isset($_GET["error"])) {
-    if ($_GET["error"] == 1) {
-        echo "<p style='color:red;'>Utilisateur non trouvé.</p>";
-    } elseif ($_GET["error"] == 2) {
-        echo "<p style='color:red;'>Mot de passe incorrect.</p>";
-    } elseif ($_GET["error"] == 3) {
-        echo "<p style='color:red;'>Rôle inconnu.</p>";
-    }
-}
-?>
+
 </body>
 </html>

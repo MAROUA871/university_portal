@@ -1,9 +1,10 @@
-
 <?php
 // app/controllers/AuthController.php
 // Ce fichier récupère les données du formulaire,
 // cherche l'utilisateur dans la base,
-// puis vérifie le mot de passe.
+// vérifie le mot de passe
+// puis vérifie aussi le rôle choisi dans la page login.
+
 session_start();
 
 require_once "../../config/bd.php";
@@ -16,6 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Récupérer le mot de passe envoyé depuis le formulaire
     $password = trim($_POST['password']);
+
+    // Récupérer le rôle envoyé depuis le login
+    // Exemple : student, teacher, admin
+    $role = trim($_POST['role'] ?? '');
 
     // Requête SQL sécurisée :
     // on cherche un utilisateur dont l'identifiant correspond à la valeur reçue
@@ -42,13 +47,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Vérifier si le mot de passe est correct
         if (password_verify($password, $user["password"])) {
+
+            // Vérifier si le rôle choisi correspond au rôle de l'utilisateur
+            // Exemple :
+            // si on a cliqué sur Student Login,
+            // seul un student doit pouvoir se connecter
+            if (!empty($role) && $user["role"] != $role) {
+                header("Location: ../../public/login.php?role=$role&error=4");
+                exit();
+            }
+
+            // Stocker les infos utiles dans la session
             $_SESSION["id"] = $user["id"];
             $_SESSION["identifier"] = $user["identifier"];
             $_SESSION["email"] = $user["email"];
             $_SESSION["role"] = $user["role"];
             $_SESSION["first_name"] = $user["first_name"];
-            $_SESSION["last_name"] = $user["last_name"];            
-          
+            $_SESSION["last_name"] = $user["last_name"];
+
+            // Redirection selon le rôle
             if ($user["role"] == "admin") {
                 header("Location: ../../public/dashboard_admin.php");
                 exit();
@@ -59,18 +76,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../../public/dashboard_etudiant.php");
                 exit();
             } else {
-                header("location: ../../public/login.php?error=3");
+                header("Location: ../../public/login.php?role=$role&error=3");
                 exit();
             }
+
         } else {
-            //Mot de passe incorrect.
-            header("Location: ../../public/login.php?error=2");
+            // Mot de passe incorrect
+            header("Location: ../../public/login.php?role=$role&error=2");
             exit();
         }
 
-    } else { 
-        //Utilisateur non trouvé.
-        header("Location: ../../public/login.php?error=1");
+    } else {
+        // Utilisateur non trouvé
+        header("Location: ../../public/login.php?role=$role&error=1");
         exit();
     }
 
