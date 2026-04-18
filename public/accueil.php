@@ -24,7 +24,7 @@ session_start();
 
             <!-- Bloc central -->
             <div class="logo-center">
-                <img src="assets/logo_progress.png" alt="Logo PROGRES" class="progress-logo">
+                <img src="assets/university_portal_logo.png" alt="Logo UNIVERSITY PORTAL" class="university_portal-logo">
 
                 
             </div>

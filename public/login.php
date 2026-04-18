@@ -5,6 +5,10 @@
 */
 $role = isset($_GET['role']) ? $_GET['role'] : '';
 
+if (empty($role)) {
+    header("Location: accueil.php");
+    exit();
+}
 /*
     Titre par défaut
 */

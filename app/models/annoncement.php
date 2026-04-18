@@ -1,58 +1,91 @@
 <?php
 //=================================================================
-//File: app/models/annoncement.php
-//Job: talk with the database to get the annoncement data(only this file does sql)
+// File: app/models/announcement.php
+// Job: All DB queries for announcements — procedural functions only
 //=================================================================
 
-
-class Annoncement { 
-
-private $conn;
-public function __construct($conn) {
-    $this->conn = $conn;
+// ── CREATE ──────────────────────────────────────────────────────
+// Insert a new announcement.
+// module_id = NULL means it's a general announcement (admin only).
+function announcement_create($conn, $user_id, $title, $content, $module_id = null) {
+    $sql = "INSERT INTO announcements (user_id, title, content, module_id, posted_at)
+            VALUES (:user_id, :title, :content, :module_id, NOW())";
+    $stmt = $conn->prepare($sql);
+    return $stmt->execute([
+        ':user_id'   => $user_id,
+        ':title'     => $title,
+        ':content'   => $content,
+        ':module_id' => $module_id, // NULL for general
+    ]);
 }
 
-//---INSERT: save a new annoncement ------
-//called by the controller when the teacher subbmits the form
-public function create($module_id, $tacher-id, $title, $body) {
-    $sql = "INSERT INTO annoncement (module_id, teacher_id, title, body, created_at)
-            VALUES (?, ?, ?, ?, NOW())";
-            //prepare the query
-    $stmt = $this->conn->prepare($sql);
-
-    //execute with real values filling the placeholders
-    //return true if the query was successful, false otherwise
-    return $stmt->execute([$module_id, $teacher_id, $title, $body]);
+// ── GET MODULES FOR A TEACHER ────────────────────────────────────
+// A teacher can only post in modules assigned to them.
+function announcement_get_modules_for_teacher($conn, $teacher_id) {
+    $stmt = $conn->prepare("SELECT id, code, name FROM modules WHERE teacher_id = :tid ORDER BY name");
+    $stmt->execute([':tid' => $teacher_id]);
+    return $stmt->fetchAll();
 }
 
-//--SELECT ALL: get every annoncement------
-//called by the controller for the student feed
-public function getAll() {
-    $sql = "SELECT a.id, a.title, a,body, a.created_at, m.name AS module_name 
-            FROM annoncement a
-            JOIN module m ON a.module_id = m.id
-            WHERE a.module_id = ?
-            ORDERED BY a.created_at DESC";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([$module_id]);
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+// ── GET ALL MODULES (admin use) ──────────────────────────────────
+// Admin sees every module dynamically (no hardcoded list).
+function announcement_get_all_modules($conn) {
+    $stmt = $conn->prepare("SELECT id, code, name FROM modules ORDER BY name");
+    $stmt->execute();
+    return $stmt->fetchAll();
 }
 
-//DELETE: delete an annoncement
-//called by the teacher when the teacher clicks delete
-public function delete($id) {
-    sql = "DELETE FROM annoncement WHERE id = ?";
-    $stmt = $this->conn->prepare($sql);
-    return $stmt->execute([$id]);
+// ── GET ANNOUNCEMENTS FOR A STUDENT ─────────────────────────────
+// Returns:
+//   - General announcements (module_id IS NULL)
+//   - Announcements for modules the student is enrolled in
+function announcement_get_for_student($conn, $student_id) {
+    $sql = "
+        SELECT a.id, a.title, a.content, a.posted_at,
+               u.first_name, u.last_name, u.role,
+               m.name AS module_name, m.code AS module_code
+        FROM announcements a
+        JOIN users u ON u.id = a.user_id
+        LEFT JOIN modules m ON m.id = a.module_id
+        WHERE
+            a.module_id IS NULL  -- general announcements
+            OR a.module_id IN (
+                SELECT module_id FROM enrollments WHERE student_id = :sid
+            )
+        ORDER BY a.posted_at DESC
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':sid' => $student_id]);
+    return $stmt->fetchAll();
 }
 
-//---GET MODULES: for the dropdown in the form ---------
-public function getModules() {
-    $sql = "SELECT id, name FROM modules ORDERED BY name ASC";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();  
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+// ── GET ALL ANNOUNCEMENTS (admin view) ───────────────────────────
+function announcement_get_all($conn) {
+    $sql = "
+        SELECT a.id, a.title, a.content, a.posted_at,
+               u.first_name, u.last_name, u.role,
+               m.name AS module_name, m.code AS module_code
+        FROM announcements a
+        JOIN users u ON u.id = a.user_id
+        LEFT JOIN modules m ON m.id = a.module_id
+        ORDER BY a.posted_at DESC
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
 }
+
+// ── GET ANNOUNCEMENTS POSTED BY A TEACHER ───────────────────────
+function announcement_get_by_teacher($conn, $teacher_id) {
+    $sql = "
+        SELECT a.id, a.title, a.content, a.posted_at,
+               m.name AS module_name, m.code AS module_code
+        FROM announcements a
+        LEFT JOIN modules m ON m.id = a.module_id
+        WHERE a.user_id = :tid
+        ORDER BY a.posted_at DESC
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([':tid' => $teacher_id]);
+    return $stmt->fetchAll();
 }
-<?php

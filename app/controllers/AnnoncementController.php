@@ -1,73 +1,109 @@
 <?php
-//=================================================================
-//File: app/controllers/AnnoncementController.php
-//Job: handle the logic of the annoncement feature, talk with the model to get data and decide which view to show
-//=================================================================
+//=========================================================
+// File: app/controllers/AnnouncementController.php
+// Job: procedural controller for announcements
+//=========================================================
+require_once __DIR__ . '/../models/modules.php';
+//require_once __DIR__ . '/../config/bd.php';
+require_once __DIR__ . "/../../config/bd.php";
+require_once __DIR__ . '/../models/announcement.php';
 
-require_once__DIR__ .'/../config/bd.php';
-require_once__DIR__ .'/../models/annoncement.php';
-
-//start session to check who is logged in
 session_start();
 
-//__SECURITY: only teacher can post__________________
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'teacher') {
+// ── SECURITY ────────────────────────────────────────────
+if (!isset($_SESSION['role'], $_SESSION['user_id'])) {
     header('Location: ../../public/index.php');
     exit();
 }
 
-//create an annoncement object -- pass $conn to it
-//now $annoncement can talk to the database
-$annoncement = new Annoncement($conn);
+$role = $_SESSION['role'];
+$user_id = $_SESSION['user_id'];
 
-//___VARIABLES sent to the view___________________________
+// ── VARIABLES ───────────────────────────────────────────
 $success = '';
 $error = '';
 $errors = [];
+$module_id = '';
+$title = '';
+$body = '';
 
-//__HANDLE FORM SUBMIT___________________________________________
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// ── FORM HANDLING ───────────────────────────────────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && in_array($role, ['teacher', 'admin'])) {
 
-    //Read what the tacher typed 
-    $module_id =trim($_POST['module_id'] ?? '');
-    $title = trim($_POST['title'] ?? '');
-    $body = trim($_POST['body'] ?? '');
-    $teacher_id = $_SESSION['user_id']; //get teacher id from session
+    $module_id = trim($_POST['module_id'] ?? '');
+    $title     = trim($_POST['title'] ?? '');
+    $body      = trim($_POST['body'] ?? '');
 
-    //__VALIDATION -- check nothing is empty___________________________
-    if (empty($module_id)) 
-        $errors['module_id'] = 'Module is required.';
-
-    if (empty($title))
+    // VALIDATION
+    if (empty($title)) {
         $errors['title'] = 'Title is required.';
+    }
 
-    if (empty($body))
-        $errors['body'] = 'The message is required.';
+    if (empty($body)) {
+        $errors['body'] = 'Message is required.';
+    }
 
-    //__IF NO ERRORS, --> SAVE TO THE DATABASE USING THE MODEL___________________
-        if (empty($errors)) {
-            $saved = $annoncement->create($module_id, $teacher_id, $title, $body);
+    // Teacher must select module
+    if ($role === 'teacher' && $module_id === '') {
+        $errors['module_id'] = 'Module is required.';
+    }
 
-            if ($saved) {
-                $success = "Announcement created successfully.";
-                //clear variables so form rests
-                $module_id = $title = $body = '';
-            }else {
-                $error = "Failed to create announcement. Please try again.";
-            }
-        }else {
-            $error = "Please fix the errors below.";
+    // Admin can choose general (0)
+    if ($role === 'admin' && $module_id === '0') {
+        $module_id = null;
+    }
+
+    // SECURITY CHECK (IMPORTANT)
+    if ($role === 'teacher' && !empty($module_id)) {
+        if (!teacher_owns_module($conn, $user_id, $module_id)) {
+            $errors['module_id'] = 'Invalid module selection.';
         }
     }
 
-    //__GET MODULES FOR THE DROPDOWN___________________________
-    $modules = $annoncement->getModules();
+    // SAVE
+    if (empty($errors)) {
 
-    //__GET MODULES FOR THE DROPDOWN___________________________
-    $modules = $annoncement->getModules();
+        $saved = announcement_create(
+            $conn,
+            $user_id,
+            $title,
+            $body,
+            $module_id ?: null
+        );
 
-    //__LOAD THE VIEW___________________________
-    //all variables above ($success, $error, $errors, $modules) are available inside the view
-    //are automatically available inside the view file
-    require_once__DIR__ .'/../views/annoncement/create.php';
-    ?>
+        if ($saved) {
+            $success = "Announcement created successfully.";
+            $module_id = $title = $body = '';
+        } else {
+            $error = "Database error while saving announcement.";
+        }
+
+    } else {
+        $error = "Please fix the errors.";
+    }
+}
+
+// ── DATA LOADING (CLEAN + SINGLE SOURCE OF TRUTH) ───────
+
+if ($role === 'admin') {
+
+    $modules = getAllModules($conn);
+    $announcements = announcement_get_all($conn);
+
+} elseif ($role === 'teacher') {
+
+    $modules = getModulesByTeacher($conn, $user_id);
+    $announcements = announcement_get_by_teacher($conn, $user_id);
+
+} elseif ($role === 'student') {
+
+    $modules = [];
+    $announcements = announcement_get_for_student($conn, $user_id);
+}
+
+// ── VIEW ────────────────────────────────────────────────
+if ($role === 'admin' || $role === 'teacher') {
+    require __DIR__ . '/../views/announcement/create.php';
+} else {
+    require __DIR__ . '/../views/announcement/list.php';
+}

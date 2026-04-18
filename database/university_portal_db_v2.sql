@@ -195,6 +195,7 @@ INSERT INTO `users` (`id`, `identifier`, `password`, `role`, `first_name`, `last
 (13, 'A001', '$2y$10$j9YW4to37qbJX49uYTv9COfyNv43yd5VVfs6WbNazyod.V13yDGGu', 'admin', 'ahmed', 'abd', 'ahmed@test.com', '2026-04-01 21:05:59'),
 (14, 'A002', '$2y$10$j9YW4to37qbJX49uYTv9COfyNv43yd5VVfs6WbNazyod.V13yDGGu', 'admin', 'karim', 'aba', 'karim@test.com', '2026-04-01 21:06:15'),
 (15, 'A003', '$2y$10$j9YW4to37qbJX49uYTv9COfyNv43yd5VVfs6WbNazyod.V13yDGGu', 'admin', 'said', 'aba', 'said@test.com', '2026-04-01 21:06:37');
+(16, 'S002', '$2y$10$j9YW4to37qbJX49uYTv9COfyNv43yd5VVfs6WbNazyod.V13yDGGu', 'student', 'fatma', 'mokedemi', 'fatma@test.com', '2026-04-17 15:13:42');
 
 --
 -- Indexes for dumped tables

@@ -30,6 +30,16 @@ require_once "../utils/role_check.php";
         </p>
     </div>
 
+    <!-- Announcements (FIXED PATH) -->
+    <div class="card">
+        <h2>📢 Annonces</h2>
+
+        <p>Publier et gérer les annonces pour vos étudiants.</p>
+
+        <a class="btn" href="announcements/create.php">Créer une annonce</a>
+        <a class="btn" href="announcements/list.php">Voir les annonces</a>
+    </div>
+
     <div class="card">
         <h2>Gestion des utilisateurs</h2>
 

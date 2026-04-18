@@ -4,7 +4,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$dbname = "university_portal_db_v2";
+$dbname = "university_portal_db";
 
 // créer la connexion
 $conn = mysqli_connect($host, $username, $password, $dbname);

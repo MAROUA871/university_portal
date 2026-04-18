@@ -1,35 +1,58 @@
-<?php 
-session_start();    
-// verifier que l'utilisateur est connecté
-require_once "../utils/auth_check.php"; 
-// definir le rôle autorisé pour cette page
-$allowed_role = "student"; 
-// vérifier que l'utilisateur a le bon rôle
+<?php
+session_start();
+
+require_once "../utils/auth_check.php";
+
+$allowed_role = "student";
 require_once "../utils/role_check.php";
-// affichage de la page étudiant
+?>
 
-
-
-?> <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Étudiant</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <div class="container">
 
-        <h2>Dashboard Étudiant</h2>
-        <div class="card">
-        <h1>Bienvenue dans l'espace étudiant</h1>
+<div class="container">
 
-        <p>Bonjour <?php echo $_SESSION["first_name"] . " " . $_SESSION["last_name"]; ?>!</p>
-        <p>Rôle : <?php echo $_SESSION["role"]; ?></p>
-        </div>
-        <a class="btn" href="logout.php">Déconnexion</a>
-    
+    <h2>Dashboard Étudiant</h2>
+
+    <!-- WELCOME CARD -->
+    <div class="card">
+        <h1>Bienvenue</h1>
+
+        <p>
+            Bonjour <?= htmlspecialchars($_SESSION["first_name"] . " " . $_SESSION["last_name"]); ?>
+        </p>
+
+        <p>
+            Rôle : <?= htmlspecialchars($_SESSION["role"]); ?>
+        </p>
     </div>
+
+    <!-- ANNOUNCEMENTS CARD -->
+    <div class="card">
+        <h3>📢 Annonces</h3>
+
+        <p>
+            Consultez les annonces des enseignants et de l'administration.
+        </p>
+
+        <!-- DIRECT LINK TO LIST.PHP -->
+        <a class="btn" href="announcements/list.php">
+            Voir les annonces
+        </a>
+    </div>
+
+    <!-- LOGOUT -->
+    <a class="btn" href="logout.php">
+        Déconnexion
+    </a>
+
+</div>
+
 </body>
 </html>

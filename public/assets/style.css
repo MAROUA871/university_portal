@@ -121,12 +121,12 @@ select:focus {
   text-align: center;
 }
 
-.progress-logo {
-  width: 260px;
+.university_portal-logo {
+  width: 80px;
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 0 auto 12px auto;
+  margin: 0 auto 12px;
 }
 
 

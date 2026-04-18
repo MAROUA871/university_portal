@@ -16,10 +16,9 @@ require_once "../utils/role_check.php";
 
 <div class="container">
 
-    <h1>Dashboard Enseignant</h1>
-
+    <!-- Header -->
     <div class="card">
-        <h2>Bienvenue dans l'espace enseignant</h2>
+        <h1>Dashboard Enseignant</h1>
 
         <p>
             Bonjour <?php echo $_SESSION["first_name"] . " " . $_SESSION["last_name"]; ?> !
@@ -30,11 +29,49 @@ require_once "../utils/role_check.php";
         </p>
     </div>
 
+    <!-- Notes -->
     <div class="card">
-        <h2>Actions disponibles</h2>
+    <h2>📝 Gestion des notes</h2>
 
-        <p>Vous pouvez consulter vos informations et gérer vos futures tâches pédagogiques.</p>
+    <p>
+        Saisir et consulter les notes des étudiants par module.
+    </p>
 
+    <a class="btn" href="notes/teacher_modules.php">
+        Accéder aux notes
+    </a>
+</div>
+
+    <!-- QR Attendance -->
+    <div class="card">
+        <h2>📱 Gestion des présences (QR Code)</h2>
+
+        <p>Créer une session de présence et générer un QR code.</p>
+
+        <a class="btn" href="start_session.php">Générer un QR Code</a>
+    </div>
+
+    <!-- Announcements (FIXED PATH) -->
+    <div class="card">
+        <h2>📢 Annonces</h2>
+
+        <p>Publier et gérer les annonces pour vos étudiants.</p>
+
+        <a class="btn" href="announcements/create.php">Créer une annonce</a>
+        <a class="btn" href="announcements/list.php">Voir les annonces</a>
+    </div>
+
+    <!-- Students -->
+    <div class="card">
+        <h2>🎓 Étudiants</h2>
+
+        <p>Voir la liste des étudiants inscrits dans vos modules.</p>
+
+        <a class="btn" href="students/list.php">Voir les étudiants</a>
+    </div>
+
+    <!-- Logout -->
+    <div class="card">
         <a class="btn" href="logout.php">Déconnexion</a>
     </div>
 

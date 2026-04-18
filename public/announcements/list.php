@@ -1,7 +1,43 @@
 <?php
-// Loaded by AnnouncementController.php for student role.
-// Has access to: $announcements
+session_start();
+
+require_once "../../config/bd.php";
+
+if (!$conn) {
+    die("DB connection failed");
+}
+
+/* ---------------------------
+   FETCH ANNOUNCEMENTS
+----------------------------*/
+$sql = "
+SELECT 
+    a.id,
+    a.title,
+    a.content,
+    a.posted_at,
+    u.first_name,
+    u.last_name,
+    u.role,
+    m.code AS module_code,
+    m.name AS module_name
+FROM announcements a
+LEFT JOIN users u ON a.user_id = u.id
+LEFT JOIN modules m ON a.module_id = m.id
+ORDER BY a.posted_at DESC
+";
+
+$result = $conn->query($sql);
+
+$announcements = [];
+
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $announcements[] = $row;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,11 +47,12 @@
     <link rel="stylesheet" href="../../public/assets/style.css">
 </head>
 <body>
+
 <div class="container">
 
-    <h1>Annonces</h1>
+    <h1>📢 Annonces</h1>
 
-    <!-- ── ANNOUNCEMENT LIST ── -->
+    <!-- LIST -->
     <?php if (empty($announcements)): ?>
         <div class="card">
             <p>Aucune annonce disponible pour le moment.</p>
@@ -24,8 +61,8 @@
         <?php foreach ($announcements as $ann): ?>
             <div class="card">
 
-                <!-- Module badge or General tag -->
-                <?php if ($ann['module_code']): ?>
+                <!-- MODULE / GENERAL BADGE -->
+                <?php if (!empty($ann['module_code'])): ?>
                     <small style="
                         background:#e8f0fe;
                         color:#3b5bdb;
@@ -34,7 +71,7 @@
                         font-size:0.78rem;
                         font-weight:600;
                     ">
-                        <?php echo htmlspecialchars($ann['module_code'] . ' — ' . $ann['module_name']); ?>
+                        <?= htmlspecialchars($ann['module_code'] . ' — ' . $ann['module_name']) ?>
                     </small>
                 <?php else: ?>
                     <small style="
@@ -49,23 +86,32 @@
                     </small>
                 <?php endif; ?>
 
+                <!-- TITLE -->
                 <h2 style="margin:0.6rem 0 0.3rem;">
-                    <?php echo htmlspecialchars($ann['title']); ?>
+                    <?= htmlspecialchars($ann['title']) ?>
                 </h2>
 
-                <p><?php echo nl2br(htmlspecialchars($ann['content'])); ?></p>
+                <!-- CONTENT -->
+                <p>
+                    <?= nl2br(htmlspecialchars($ann['content'])) ?>
+                </p>
 
+                <!-- FOOTER -->
                 <small style="color:#aaa;">
-                    Publié par <?php echo htmlspecialchars($ann['first_name'] . ' ' . $ann['last_name']); ?>
-                    (<?php echo htmlspecialchars($ann['role']); ?>)
-                    — <?php echo $ann['posted_at']; ?>
+                    Publié par <?= htmlspecialchars($ann['first_name'] . ' ' . $ann['last_name']) ?>
+                    (<?= htmlspecialchars($ann['role']) ?>)
+                    — <?= $ann['posted_at'] ?>
                 </small>
+
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <a class="btn" href="../../public/dashboard_etudiant.php">⬅ Retour au tableau de bord</a>
+    <a class="btn" href="../../public/dashboard_etudiant.php">
+        ⬅ Retour au tableau de bord
+    </a>
 
 </div>
+
 </body>
 </html>
