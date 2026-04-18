@@ -37,7 +37,7 @@ require_once "../utils/role_check.php";
         Saisir et consulter les notes des étudiants par module.
     </p>
 
-    <a class="btn" href="notes/teacher_modules.php">
+    <a class="btn" href="../app/views/notes/teacher.php">
         Accéder aux notes
     </a>
 </div>

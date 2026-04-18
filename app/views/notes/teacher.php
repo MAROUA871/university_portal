@@ -1,21 +1,32 @@
-<h2>Module Students</h2>
+<h2 class="title">📘 Module Students</h2>
 
-<table border="1">
-<tr>
-    <th>Name</th>
-    <th>Exam</th>
-    <th>TD</th>
-    <th>Presence</th>
-    <th>Average</th>
-</tr>
+<?php if (!empty($data) && is_array($data)): ?>
 
-<?php foreach ($data as $row): ?>
-<tr>
-    <td><?= $row['student']['first_name'] ?></td>
-    <td><?= $row['notes']['exam'] ?></td>
-    <td><?= $row['notes']['td'] ?></td>
-    <td><?= $row['notes']['presence'] ?></td>
-    <td><?= $row['average'] ?></td>
-</tr>
-<?php endforeach; ?>
-</table>
+    <table class="notes-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Exam</th>
+                <th>TD</th>
+                <th>Presence</th>
+                <th>Average</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data as $row): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['student']['first_name'] ?? '-') ?></td>
+                    <td><?= htmlspecialchars($row['notes']['exam'] ?? '-') ?></td>
+                    <td><?= htmlspecialchars($row['notes']['td'] ?? '-') ?></td>
+                    <td><?= htmlspecialchars($row['notes']['presence'] ?? '-') ?></td>
+                    <td><?= htmlspecialchars($row['average'] ?? '-') ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+<?php else: ?>
+
+    <p class="empty">⚠️ No student data available.</p>
+
+<?php endif; ?>
