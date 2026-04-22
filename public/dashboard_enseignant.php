@@ -63,7 +63,7 @@ require_once "../utils/role_check.php";
 
         <p>Voir la liste des étudiants inscrits dans vos modules.</p>
 
-        <a class="btn" href="students/list.php">Voir les étudiants</a>
+        <a class="btn" href="students_list.php">Voir les étudiants</a>
     </div>
 
     <!-- Logout -->
