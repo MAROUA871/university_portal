@@ -60,7 +60,7 @@ if (isset($_GET["error"])) {
     <div class="login-card">
 
         <div class="login-logo-box">
-            <img src="assets/logo_progress.png" alt="Logo PROGRES" class="login-logo">
+            <img src="assets/university_portal_logo.png" alt="Logo PROGRES" class="login-logo">
         </div>
 
         <!-- Texte arabe -->

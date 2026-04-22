@@ -112,7 +112,8 @@ select:focus {
 }
 
 .side-logo {
-  max-width: 85px;
+  width: 95px;
+  max-width: 100%;
   height: auto;
 }
 
@@ -121,8 +122,8 @@ select:focus {
   text-align: center;
 }
 
-.university_portal-logo {
-  width: 80px;
+.university-portal-logo {
+  width: 220px;
   max-width: 100%;
   height: auto;
   display: block;
@@ -201,45 +202,6 @@ select:focus {
   background-color: #6f3388;
 }
 
-@media (max-width: 768px) {
-
-    .logo-side {
-        display: none;
-    }
-
-    .top-logos {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .progress-logo {
-        width: 180px;
-        margin: 10px auto;
-    }
-
-    
-
-    .main-title {
-        font-size: 22px;
-    }
-
-    .role-btn {
-        width: 100%;
-    }
-}
-@media (max-width: 500px) {
-    .login-ar {
-        font-size: 18px;
-    }
-
-    .login-fr {
-        font-size: 14px;
-    }
-
-    .login-title {
-        font-size: 22px;
-    }
-}
 
 .delete-btn {
   background-color: red;
@@ -388,4 +350,55 @@ select:focus {
 
 .small-link:hover {
   text-decoration: underline;
+}
+/* ==========================
+   STUDENTS BLOCK
+========================== */
+
+.students-block {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 1.2rem;
+}
+
+.students-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.students-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 1.5rem;
+}
+
+.student-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.student-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.student-meta {
+    font-size: 0.75rem;
+    color: #999;
+    font-family: monospace;
+}
+
+.student-group {
+    font-size: 0.65rem;
+    background: rgba(0,0,0,0.06);
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
 }

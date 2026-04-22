@@ -7,73 +7,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Gestion de la scolarité</title>
-    <link rel="stylesheet" href="assets/style.css">
-    <style>
-        /* Student credits block — scoped styles that won't clash with existing style.css */
-        .students-block {
-            margin-top: 2rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding-top: 1.2rem;
-        }
-
-        .students-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #888;
-            margin-bottom: 0.75rem;
-            text-align: center;
-        }
-
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem 1.5rem;
-        }
-
-        .student-entry {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
-        }
-
-        .student-name {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .student-meta {
-            font-size: 0.68rem;
-            color: #999;
-            font-family: monospace;
-            letter-spacing: 0.02em;
-        }
-
-        .student-group {
-            display: inline-block;
-            font-size: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            background: rgba(0,0,0,0.06);
-            color: #666;
-            padding: 0.1rem 0.35rem;
-            border-radius: 3px;
-            margin-left: 0.25rem;
-        }
-
-        /* Responsive: stack to 1 column on small screens */
-        @media (max-width: 480px) {
-            .students-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css?v=3">
+    
 </head>
 <body>
 
@@ -90,12 +25,12 @@ session_start();
 
             <!-- Bloc central -->
             <div class="logo-center">
-                <img src="assets/university_portal_logo.png" alt="Logo UNIVERSITY PORTAL" class="university_portal-logo">
+                <img src="assets/university_portal_logo.png" alt="Logo UNIVERSITY PORTAL" class="university-portal-logo">
             </div>
 
             <!-- Logo faculté -->
             <div class="logo-side">
-                <img src="assets/logo_faculty.png" alt="Logo Faculté" class="side-logo">
+                <img src="assets/logo_faculty.png?v=2" alt="Logo Faculté" class="side-logo">
             </div>
 
         </div>
