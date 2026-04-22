@@ -22,7 +22,7 @@ session_start();
             </div>
 
             <div class="logo-center">
-                <img src="assets/logo_progress.png" class="progress-logo">
+                <img src="assets/university_portal_logo.png" class="university_portal-logo">
             </div>
 
             <div class="logo-side">
