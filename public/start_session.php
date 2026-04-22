@@ -86,7 +86,7 @@ $qr_path = "qr_codes/session_$token.png";
 
         <!-- Back button -->
         <div class="login-links">
-            <a class="small-link" href="index.php">Retour</a>
+            <a class="small-link" href="qrview.php">Retour</a>
         </div>
 
     </div>

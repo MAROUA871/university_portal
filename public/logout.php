@@ -12,6 +12,6 @@ session_unset();
 session_destroy();
 
 // Rediriger l'utilisateur vers la page de connexion
-header("Location: accueil.php");
+header("Location: index.php");
 exit();
 ?>

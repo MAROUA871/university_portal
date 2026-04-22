@@ -6,7 +6,7 @@
 $role = isset($_GET['role']) ? $_GET['role'] : '';
 
 if (empty($role)) {
-    header("Location: accueil.php");
+    header("Location: index.php");
     exit();
 }
 /*
@@ -108,7 +108,7 @@ if (isset($_GET["error"])) {
         </form>
 
         <div class="login-links">
-            <a class="small-link" href="accueil.php">Retour à l'accueil</a>
+            <a class="small-link" href="index.php">Retour à l'accueil</a>
         </div>
 
     </div>
