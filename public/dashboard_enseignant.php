@@ -31,16 +31,12 @@ require_once "../utils/role_check.php";
 
     <!-- Notes -->
     <div class="card">
-    <h2>📝 Gestion des notes</h2>
+        <h2>📝 Gestion des notes</h2>
 
-    <p>
-        Saisir et consulter les notes des étudiants par module.
-    </p>
+        <p>Saisir et consulter les notes des étudiants par module.</p>
 
-    <a class="btn" href="../app/views/notes/teacher.php">
-        Accéder aux notes
-    </a>
-</div>
+        <a class="btn" href="notes/notes.php">Accéder aux notes</a>
+    </div>
 
     <!-- QR Attendance -->
     <div class="card">

@@ -1,85 +1,62 @@
 <?php
 
+require_once __DIR__ . '/../../config/bd.php';
+
 require_once __DIR__ . '/NotesStudentController.php';
 require_once __DIR__ . '/NotesTeacherController.php';
 require_once __DIR__ . '/NotesAdminController.php';
 
-class NotesController {
 
-    /**
-     * Main entry point for /notes
-     */
-    public static function index($db) {
+/**
+ * Handle main notes entry (like index)
+ */
+function notes_index() {
 
-        $user = $_SESSION['user'];
+    global $conn;
 
-        if (!$user) {
-            header("Location: /public/login.php");
-            exit;
-        }
-
-        switch ($user['role']) {
-
-            case 'student':
-                NotesStudentController::index($db, $user['id']);
-                break;
-
-            case 'teacher':
-                // teacher usually needs module context
-                // fallback page or redirect to module selection
-                header("Location: /public/dashboard_enseignant.php");
-                break;
-
-            case 'admin':
-                NotesAdminController::index($db);
-                break;
-
-            default:
-                echo "Unauthorized role";
-        }
+    if (!isset($_SESSION["role"])) {
+        header("Location: /university_portal/public/login.php");
+        exit;
     }
 
+    $role = $_SESSION["role"];
 
-    /**
-     * Admin/Teacher student detail view
-     */
-    public static function studentDetail($db, $student_id) {
+    switch ($role) {
 
-        $user = $_SESSION['user'];
+        case 'student':
+            NotesStudentController::index($conn, $_SESSION["user_id"]);
+            break;
 
-        if (!$user) {
-            header("Location: /public/login.php");
-            exit;
-        }
+        case 'teacher':
+            // handled elsewhere (notes.php)
+            break;
 
-        if ($user['role'] === 'admin') {
+        case 'admin':
+            NotesAdminController::index($conn);
+            break;
 
-            NotesAdminController::detail($db, $student_id);
-            return;
-        }
+        default:
+            echo "Unauthorized role";
+    }
+}
 
+
+/**
+ * Handle teacher module view
+ */
+function notes_module($module_id) {
+
+    global $conn;
+
+    if (!isset($_SESSION['user'])) {
+        header("Location: /public/login.php");
+        exit;
+    }
+
+    if ($_SESSION['user']['role'] !== 'teacher') {
         echo "Access denied";
+        return;
     }
 
-
-    /**
-     * Teacher module view entry
-     */
-    public static function module($db, $module_id) {
-
-        $user = $_SESSION['user'];
-
-        if (!$user) {
-            header("Location: /public/login.php");
-            exit;
-        }
-
-        if ($user['role'] === 'teacher') {
-
-            NotesTeacherController::moduleView($db, $module_id);
-            return;
-        }
-
-        echo "Access denied";
-    }
+    NotesTeacherController::moduleView($conn, $module_id);
 }
