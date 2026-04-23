@@ -70,7 +70,7 @@ if (isset($_GET["error"])) {
 
         <!-- Texte français -->
         <p class="login-fr">
-            Ministère de l’Enseignement Supérieur et de la Recherche Scientifique
+            Ministère de l'Enseignement Supérieur et de la Recherche Scientifique
         </p>
 
         <!-- Titre du portail -->

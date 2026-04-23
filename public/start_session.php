@@ -47,15 +47,15 @@ $qr_path = "qr_codes/session_$token.png";
         <!-- Logos -->
         <div class="top-logos">
             <div class="logo-side">
-                <img src="assets/logo_university.png" class="side-logo">
+                <img src="assets/logo_university.png?v=2" class="side-logo">
             </div>
 
             <div class="logo-center">
-                <img src="assets/university_portal_logo.png" class="progress-logo">
+                <img src="assets/university_portal_logo.png?v=3" class="university-portal-logo">
             </div>
 
             <div class="logo-side">
-                <img src="assets/logo_faculty.png" class="side-logo">
+                <img src="assets/logo_faculty.png?v=2" class="side-logo">
             </div>
         </div>
 

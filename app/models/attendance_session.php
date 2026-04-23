@@ -5,7 +5,7 @@ function createSession($db, $user_id) {
     $token = bin2hex(random_bytes(32));
 
     $sql = "INSERT INTO attendance_session (user_id, qr_token, created_at) VALUES (?, ?, NOW())";
-    echo "SQL being executed: $sql<br>"; // debug line
+    
 
     $stmt = $db->prepare($sql);
     $success = $stmt->execute([$user_id, $token]);
