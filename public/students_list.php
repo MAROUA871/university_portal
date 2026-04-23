@@ -40,7 +40,7 @@ $result = mysqli_query($conn, $sql);
     <div class="card">
         <table border="1" width="100%" cellpadding="10" cellspacing="0">
             <tr>
-                <th>ID</th>
+              
                 <th>Identifiant</th>
                 <th>Prénom</th>
                 <th>Nom</th>
@@ -50,7 +50,7 @@ $result = mysqli_query($conn, $sql);
 
             <?php while ($user = mysqli_fetch_assoc($result)) { ?>
                 <tr>
-                    <td><?php echo $user["id"]; ?></td>
+                    
                     <td><?php echo $user["identifier"]; ?></td>
                     <td><?php echo $user["first_name"]; ?></td>
                     <td><?php echo $user["last_name"]; ?></td>

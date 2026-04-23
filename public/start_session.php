@@ -2,7 +2,7 @@
 // start_session.php
 
 // 🔌 Connect to database
-$db = new PDO("mysql:host=localhost;dbname=university_portal_db", "root", "");
+$db = new PDO("mysql:host=localhost;dbname=university_portal_bd", "root", "");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // 👨‍🏫 Teacher ID (temporary)
@@ -37,7 +37,7 @@ $qr_path = "qr_codes/session_$token.png";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session de présence</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=3"> 
 </head>
 <body>
 
@@ -51,7 +51,7 @@ $qr_path = "qr_codes/session_$token.png";
             </div>
 
             <div class="logo-center">
-                <img src="assets/logo_progress.png" class="progress-logo">
+                <img src="assets/university_portal_logo.png" class="progress-logo">
             </div>
 
             <div class="logo-side">
