@@ -184,7 +184,7 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <title>Gestion des notes</title>
-    <link rel="stylesheet" href="../assets/style.css?v=7">
+    <link rel="stylesheet" href="../assets/style.css?v=6">
 </head>
 <body>
 

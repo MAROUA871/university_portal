@@ -40,7 +40,7 @@ if (!$is_admin) {
 ========================= */
 if ($is_admin) {
     $sql = "
-        SELECT id, identifier, first_name, last_name, email
+        SELECT id, identifier, first_name, last_name, email,status
         FROM users
         WHERE role = 'student'
         ORDER BY last_name ASC, first_name ASC
@@ -110,7 +110,7 @@ if (!$is_admin) {
     foreach ($rows as $user) {
         $td = $user["td_note"];
         $exam = $user["exam_note"];
-        $moyenne = ($td !== null && $exam !== null) ? round(($td + $exam) / 2, 2) : null;
+        $moyenne = ($td !== null && $exam !== null) ? round(($td * 0.4) + ($exam * 0.6), 2) : null;
 
         if ($moyenne !== null) {
             $total++;
@@ -168,12 +168,12 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
 
         <div class="search-box">
             <label for="searchInput">Recherche rapide (nom ou identifiant)</label>
-            <input type="text" id="searchInput" placeholder="🔎Tapez un nom ou un identifiant...">
+            <input type="text" id="searchInput" placeholder="🔎Rechercher par nom, iderntifiant ...">
         </div>
 
-        <div style="margin-bottom: 20px; text-align:left;">
+        
             <button class="btn export-btn" onclick="exportPDF()">Exporter PDF</button>
-        </div>
+        
 
         <div id="pdf-content">
             <?php if (!$is_admin): ?>
@@ -185,7 +185,7 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
                 </div>
             <?php endif; ?>
 
-            <table border="1" width="100%" cellpadding="10" cellspacing="0" id="studentsTable">
+            <table border="1" width="100%" cellpadding="10" cellspacing="0" id="dataTable">
                 <tr>
                     <th>Identifiant</th>
                     <th>Prénom</th>
@@ -198,10 +198,12 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
                         <th>Examen</th>
                         <th>Moyenne</th>
                         <th>Statut</th>
+                        
                     <?php endif; ?>
 
                     <?php if ($is_admin): ?>
                         <th>Action</th>
+                        <th>Etat</th>
                     <?php endif; ?>
                 </tr>
 
@@ -246,12 +248,24 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
                         <?php endif; ?>
 
                         <?php if ($is_admin): ?>
-                            <td>
-                                <a href="edit_user.php?id=<?php echo $user['id']; ?>" style="color:blue; text-decoration:none;">✏️ Edit</a>
+                            <td class="actions">
+                                <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="edit-link">
+                                    ✏️ Edit
+                                </a>
                                 <br>
+
                                 <a href="delete_user.php?id=<?php echo $user['id']; ?>"
-                                   onclick="return confirm('Voulez-vous vraiment supprimer cet étudiant ?');"
-                                   style="color:red; text-decoration:none;">🗑️ Delete</a>
+                                   class="delete-link"
+                                   onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                    🗑️ Delete
+                                </a>
+                            </td>
+                            <td>
+                                <?php if ($user["status"] == 1): ?>
+                                    <span class="status-dot active"></span>
+                                <?php else: ?>
+                                    <span class="status-dot inactive"></span>
+                                <?php endif; ?>
                             </td>
                         <?php endif; ?>
                     </tr>
@@ -270,7 +284,7 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
 <script>
 document.getElementById("searchInput").addEventListener("keyup", function() {
     let filter = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#studentsTable tr");
+    let rows = document.querySelectorAll("#dataTable tr");
 
     rows.forEach((row, index) => {
         if (index === 0) return;

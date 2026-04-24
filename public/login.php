@@ -43,6 +43,8 @@ if (isset($_GET["error"])) {
         $message_erreur = "Rôle inconnu.";
     } elseif ($_GET["error"] == 4) {
         $message_erreur = "Ce compte ne correspond pas au rôle sélectionné.";
+    }  elseif ($_GET["error"] == 5) {
+        $message_erreur = "Votre compte est désactivé. Contactez l'administration.";
     }
 }
 ?>
@@ -52,7 +54,7 @@ if (isset($_GET["error"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titre; ?></title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=6">
 </head>
 <body>
 

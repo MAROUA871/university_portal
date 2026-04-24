@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un utilisateur</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=6">
 </head>
 <body>
 
@@ -47,7 +47,7 @@
         <button class="btn" type="submit">Ajouter</button>
     </form>
 
-    <a class="small-link" href="dashboard_admin.php">Retour au dashboard admin</a>
+    <a class="btn" href="dashboard_admin.php">Retour au dashboard admin</a>
 </div>
 
 </body>

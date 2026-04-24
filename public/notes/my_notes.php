@@ -13,13 +13,14 @@ $student_id = intval($_SESSION["id"]);
 $sql = "
 SELECT 
     m.name AS module_name,
+    m.coefficient,
     ROUND(MAX(CASE WHEN n.type = 'td' THEN n.value END), 2) AS td,
     ROUND(MAX(CASE WHEN n.type = 'exam' THEN n.value END), 2) AS exam
 FROM modules m
 LEFT JOIN notes n 
     ON n.module_id = m.id 
     AND n.student_id = ?
-GROUP BY m.id, m.name
+GROUP BY m.id, m.name, m.coefficient
 ORDER BY m.name ASC
 ";
 
@@ -29,17 +30,19 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
 $notes = [];
-$total_modules = 0;
-$total_moyenne = 0;
+$somme_moyenne_coeff = 0;
+$somme_coefficients = 0;
 
 while ($row = mysqli_fetch_assoc($result)) {
     $td = $row["td"];
     $exam = $row["exam"];
+    $coefficient = intval($row["coefficient"]);
 
     if ($td !== null && $exam !== null) {
         $moyenne = round(($td * 0.4) + ($exam * 0.6), 2);
-        $total_modules++;
-        $total_moyenne += $moyenne;
+
+        $somme_moyenne_coeff += $moyenne * $coefficient;
+        $somme_coefficients += $coefficient;
     } else {
         $moyenne = null;
     }
@@ -48,7 +51,9 @@ while ($row = mysqli_fetch_assoc($result)) {
     $notes[] = $row;
 }
 
-$moyenne_generale = ($total_modules > 0) ? round($total_moyenne / $total_modules, 2) : null;
+$moyenne_generale = ($somme_coefficients > 0)
+    ? round($somme_moyenne_coeff / $somme_coefficients, 2)
+    : null;
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +61,7 @@ $moyenne_generale = ($total_modules > 0) ? round($total_moyenne / $total_modules
 <head>
     <meta charset="UTF-8">
     <title>Mes notes</title>
-    <link rel="stylesheet" href="../assets/style.css?v=8">
+    <link rel="stylesheet" href="../assets/style.css?v=6">
 </head>
 <body>
 
@@ -88,6 +93,7 @@ $moyenne_generale = ($total_modules > 0) ? round($total_moyenne / $total_modules
             <table>
                 <tr>
                     <th>Module</th>
+                    <th>Coefficient</th>
                     <th>TD</th>
                     <th>Examen</th>
                     <th>Moyenne</th>
@@ -96,6 +102,8 @@ $moyenne_generale = ($total_modules > 0) ? round($total_moyenne / $total_modules
                 <?php foreach ($notes as $note): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($note["module_name"]); ?></td>
+
+                        <td><?php echo htmlspecialchars($note["coefficient"]); ?></td>
 
                         <td class="<?php echo ($note["td"] !== null && $note["td"] >= 10) ? 'good' : 'bad'; ?>">
                             <?php echo ($note["td"] !== null) ? number_format($note["td"], 2) : "-"; ?>

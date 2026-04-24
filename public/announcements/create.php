@@ -128,7 +128,7 @@ if ($role === 'teacher') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annonces</title>
-    <link rel="stylesheet" href="../../public/assets/style.css">
+    <link rel="stylesheet" href="../../public/assets/style.css?v=6">
 </head>
 <body>
 
