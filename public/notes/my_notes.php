@@ -61,7 +61,7 @@ $moyenne_generale = ($somme_coefficients > 0)
 <head>
     <meta charset="UTF-8">
     <title>Mes notes</title>
-    <link rel="stylesheet" href="../assets/style.css?v=6">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 

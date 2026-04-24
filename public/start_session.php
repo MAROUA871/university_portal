@@ -37,7 +37,7 @@ $qr_path = "qr_codes/session_$token.png";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session de présence</title>
-    <link rel="stylesheet" href="assets/style.css?v=6"> 
+    <link rel="stylesheet" href="assets/style.css"> 
 </head>
 <body>
 

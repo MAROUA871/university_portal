@@ -133,7 +133,7 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
 <head>
     <meta charset="UTF-8">
     <title>Liste des étudiants</title>
-    <link rel="stylesheet" href="assets/style.css?v=4">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 

@@ -131,7 +131,7 @@ $taux_reussite = ($total_etudiants > 0)
 <head>
     <meta charset="UTF-8">
     <title>Statistiques</title>
-    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 

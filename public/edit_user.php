@@ -37,7 +37,7 @@ if (isset($_GET["id"])) {
 <head>
     <meta charset="UTF-8">
     <title>Modifier utilisateur</title>
-    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
@@ -67,7 +67,7 @@ if (isset($_GET["id"])) {
         <button class="btn" type="submit">Enregistrer les modifications</button>
     </form>
 
-    <a class="small-link" href="dashboard_admin.php">Retour au dashboard</a>
+    <a class="btn" href="dashboard_admin.php">Retour au dashboard</a>
 </div>
 
 </body>

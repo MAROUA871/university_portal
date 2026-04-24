@@ -97,7 +97,7 @@ if ($student_id > 0) {
 <head>
     <meta charset="UTF-8">
     <title>Relevé de notes étudiant</title>
-    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 

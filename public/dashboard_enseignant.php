@@ -10,7 +10,7 @@ require_once "../utils/role_check.php";
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Enseignant</title>
-    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
