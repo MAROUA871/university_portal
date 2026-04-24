@@ -46,7 +46,20 @@ require_once "../utils/role_check.php";
             Voir les annonces
         </a>
     </div>
+    <!-- ATTENDANCE CARD -->
+    <div class="card">
+        <h3>📷 Présence</h3>
 
+        <p> Gérer votre présence aux séances.</p>
+
+        <!-- VIEW ATTENDANCE -->
+        <a class="btn" href="attendance_history.php">Voir ma présence</a>
+
+        <br><br>
+
+        <!-- RECORD ATTENDANCE -->
+        <a class="btn" href="record_attendance.php">Enregistrer ma présence</a>
+    </div>
     <!-- LOGOUT -->
     <a class="btn" href="logout.php">
         Déconnexion

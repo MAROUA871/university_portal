@@ -1,19 +1,16 @@
 <?php
 // attendance_session.php
 
-function createSession($db, $user_id) {
+function createSession($db, $user_id, $module_id) {
     $token = bin2hex(random_bytes(32));
 
-    $sql = "INSERT INTO attendance_session (user_id, qr_token, created_at) VALUES (?, ?, NOW())";
-    echo "SQL being executed: $sql<br>"; // debug line
+    $sql = "INSERT INTO attendance_session (user_id, qr_token, module_id, created_at)
+            VALUES (?, ?, ?, NOW())";
 
     $stmt = $db->prepare($sql);
-    $success = $stmt->execute([$user_id, $token]);
+    $stmt->execute([$user_id, $token, $module_id]);
 
-    if ($success) {
-        return $token;
-    }
-    return false;
+    return $token;
 }
 
 function getSessionByToken($db, $token) {

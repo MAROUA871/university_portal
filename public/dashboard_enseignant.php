@@ -44,7 +44,7 @@ require_once "../utils/role_check.php";
 
         <p>Créer une session de présence et générer un QR code.</p>
 
-        <a class="btn" href="start_session.php">Générer un QR Code</a>
+        <a class="btn" href="qrview.php">Générer un QR Code</a>
     </div>
 
     <!-- Announcements (FIXED PATH) -->
