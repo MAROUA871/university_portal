@@ -43,6 +43,8 @@ if (isset($_GET["error"])) {
         $message_erreur = "Rôle inconnu.";
     } elseif ($_GET["error"] == 4) {
         $message_erreur = "Ce compte ne correspond pas au rôle sélectionné.";
+    }  elseif ($_GET["error"] == 5) {
+        $message_erreur = "Votre compte est désactivé. Contactez l'administration.";
     }
 }
 ?>
@@ -70,7 +72,7 @@ if (isset($_GET["error"])) {
 
         <!-- Texte français -->
         <p class="login-fr">
-            Ministère de l’Enseignement Supérieur et de la Recherche Scientifique
+            Ministère de l'Enseignement Supérieur et de la Recherche Scientifique
         </p>
 
         <!-- Titre du portail -->

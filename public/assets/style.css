@@ -123,14 +123,12 @@ select:focus {
 }
 
 .university-portal-logo {
-  width: 220px;
+  width: 280px;
   max-width: 100%;
   height: auto;
   display: block;
   margin: 0 auto 12px;
 }
-
-
 
 .main-title {
   color: #1f3c88;
@@ -202,7 +200,6 @@ select:focus {
   background-color: #6f3388;
 }
 
-
 .delete-btn {
   background-color: red;
   color: white;
@@ -255,19 +252,19 @@ select:focus {
 
 /* Texte arabe login */
 .login-ar {
-    font-size: 22px;
-    font-weight: bold;
-    direction: rtl; /* important pour l’arabe */
-    margin-bottom: 10px;
-    letter-spacing: 1px;
+  font-size: 22px;
+  font-weight: bold;
+  direction: rtl; /* important pour l’arabe */
+  margin-bottom: 10px;
+  letter-spacing: 1px;
 }
 
 /* Texte français login */
 .login-fr {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .role-badge {
@@ -356,49 +353,279 @@ select:focus {
 ========================== */
 
 .students-block {
-    margin-top: 2rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding-top: 1.2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1.2rem;
 }
 
 .students-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 0.75rem;
-    text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 0.75rem;
+  text-align: center;
 }
 
 .students-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 1.5rem;
 }
 
 .student-entry {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
 .student-name {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .student-meta {
-    font-size: 0.75rem;
-    color: #999;
-    font-family: monospace;
+  font-size: 0.75rem;
+  color: #999;
+  font-family: monospace;
 }
 
 .student-group {
-    font-size: 0.65rem;
-    background: rgba(0,0,0,0.06);
-    padding: 2px 5px;
-    border-radius: 3px;
-    margin-left: 5px;
+  font-size: 0.65rem;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 5px;
+}
+
+/* ==========================
+   TABLE NOTES CLEAN
+========================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+table th {
+  background-color: #1f3c88;
+  color: white;
+  padding: 12px;
+}
+
+table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #eef3ff;
+}
+
+/* input notes */
+.note-input {
+  width: 70px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* bouton edit/save */
+.action-btn {
+  background-color: #1f3c88;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background-color: #162c63;
+}
+
+/* message */
+.top-message {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+/* filtre module */
+.filter-form {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.filter-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* notes */
+.good {
+  color: green;
+  font-weight: bold;
+}
+
+.bad {
+  color: red;
+  font-weight: bold;
+}
+
+.cancel-btn {
+  background-color: #777;
+  margin-left: 5px;
+}
+
+.cancel-btn:hover {
+  background-color: #555;
+}
+/* =========================
+   RECHERCHE RAPIDE (JS)
+========================= */
+.search-box {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.search-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 350px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* =========================
+   AMELIORATION FILTRE MODULE
+========================= */
+.filter-form select {
+  max-width: 350px;
+}
+
+/* =========================
+   MOYENNE STYLE
+========================= */
+table td:last-child {
+  font-weight: bold;
+}
+table td {
+  text-align: center;
+}
+
+table th {
+  text-align: center;
+}
+/* =========================
+   STATUT ETUDIANT
+========================= */
+.status-pass {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.status-fail {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
+}
+/* =========================
+   STATISTIQUES MODULE
+========================= */
+/* =========================
+   STATISTIQUES DASHBOARD
+========================= */
+.stats-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 25px auto 10px auto;
+  max-width: 900px;
+}
+
+.stat-item {
+  background: linear-gradient(135deg, #eef3ff, #ffffff);
+  color: #1f3c88;
+  padding: 18px 15px;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(31, 60, 136, 0.15);
+  border: 1px solid #dce6ff;
+}
+.export-btn {
+  width: auto;
+  padding: 10px 18px;
+  margin-top: 0;
+}
+/* =========================
+   LIENS ACTION LISTES ADMIN
+========================= */
+.edit-link {
+  color: blue;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+.delete-link {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.delete-link:hover {
+  text-decoration: underline;
+}
+
+.actions a {
+  display: inline-block;
+  margin: 3px 0;
+}
+/* =========================
+   ETAT UTILISATEUR (DOT)
+========================= */
+.status-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.status-dot.active {
+  background-color: #28a745; /* vert */
+  box-shadow: 0 0 6px rgba(40, 167, 69, 0.6);
+}
+
+.status-dot.inactive {
+  background-color: #6c757d; /* gris */
 }

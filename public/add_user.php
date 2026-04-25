@@ -47,7 +47,7 @@
         <button class="btn" type="submit">Ajouter</button>
     </form>
 
-    <a class="small-link" href="dashboard_admin.php">Retour au dashboard admin</a>
+    <a class="btn" href="dashboard_admin.php">Retour au dashboard admin</a>
 </div>
 
 </body>

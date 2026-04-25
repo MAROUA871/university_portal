@@ -7,7 +7,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Gestion de la scolarité</title>
-    <link rel="stylesheet" href="assets/style.css?v=3">
+    <link rel="stylesheet" href="assets/style.css">
     
 </head>
 <body>
@@ -68,7 +68,7 @@ session_start();
                 </div>
 
                 <div class="student-entry">
-                    <span class="student-name">Abaoui Mellisa</span>
+                    <span class="student-name">Abaoui Melissa</span>
                     <span class="student-meta">212431859912<span class="student-group">Groupe 2</span></span>
                 </div>
 

@@ -1,71 +1,48 @@
 <?php
 // app/controllers/AuthController.php
-// Ce fichier récupère les données du formulaire,
-// cherche l'utilisateur dans la base,
-// vérifie le mot de passe
-// puis vérifie aussi le rôle choisi dans la page login.
 
 session_start();
 
 require_once "../../config/bd.php";
 
-// Vérifier que le formulaire a bien été envoyé en POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Récupérer l'identifiant envoyé depuis le formulaire
     $identifier = trim($_POST['identifier']);
-
-    // Récupérer le mot de passe envoyé depuis le formulaire
     $password = trim($_POST['password']);
-
-    // Récupérer le rôle envoyé depuis le login
-    // Exemple : student, teacher, admin
     $role = trim($_POST['role'] ?? '');
 
-    // Requête SQL sécurisée :
-    // on cherche un utilisateur dont l'identifiant correspond à la valeur reçue
     $sql = "SELECT * FROM users WHERE identifier = ?";
-
-    // Préparer la requête
     $stmt = mysqli_prepare($conn, $sql);
 
-    // Associer la valeur de $identifier au point d'interrogation
-    // "s" signifie que c'est une chaîne de caractères
     mysqli_stmt_bind_param($stmt, "s", $identifier);
-
-    // Exécuter la requête
     mysqli_stmt_execute($stmt);
 
-    // Récupérer le résultat de la requête
     $result = mysqli_stmt_get_result($stmt);
-
-    // Récupérer une seule ligne sous forme de tableau associatif
     $user = mysqli_fetch_assoc($result);
 
-    // Vérifier si l'utilisateur existe
     if ($user) {
 
-        // Vérifier si le mot de passe est correct
         if (password_verify($password, $user["password"])) {
 
-            // Vérifier si le rôle choisi correspond au rôle de l'utilisateur
-            // Exemple :
-            // si on a cliqué sur Student Login,
-            // seul un student doit pouvoir se connecter
             if (!empty($role) && $user["role"] != $role) {
                 header("Location: ../../public/login.php?role=$role&error=4");
                 exit();
             }
 
-            // Stocker les infos utiles dans la session
+            // Bloquer compte désactivé
+            if (isset($user["status"]) && intval($user["status"]) === 0) {
+                header("Location: ../../public/login.php?role=$role&error=5");
+                exit();
+            }
+
             $_SESSION["id"] = $user["id"];
             $_SESSION["identifier"] = $user["identifier"];
             $_SESSION["email"] = $user["email"];
             $_SESSION["role"] = $user["role"];
             $_SESSION["first_name"] = $user["first_name"];
             $_SESSION["last_name"] = $user["last_name"];
+            $_SESSION["status"] = $user["status"];
 
-            // Redirection selon le rôle
             if ($user["role"] == "admin") {
                 header("Location: ../../public/dashboard_admin.php");
                 exit();
@@ -81,22 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
         } else {
-            // Mot de passe incorrect
             header("Location: ../../public/login.php?role=$role&error=2");
             exit();
         }
 
     } else {
-        // Utilisateur non trouvé
         header("Location: ../../public/login.php?role=$role&error=1");
         exit();
     }
 
-    // Fermer la requête préparée
     mysqli_stmt_close($stmt);
 
 } else {
-    // Si quelqu'un ouvre directement ce fichier sans passer par le formulaire
     echo "Accès non autorisé.";
 }
 ?>

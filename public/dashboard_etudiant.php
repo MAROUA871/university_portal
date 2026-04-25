@@ -33,6 +33,14 @@ require_once "../utils/role_check.php";
         </p>
     </div>
 
+    <div class="card">
+       <h2>📝 Mes notes</h2>
+
+       <p>Consultez vos notes TD, Examen, moyenne et statut par module.</p>
+
+       <a class="btn" href="notes/my_notes.php">Voir mes notes</a>
+   </div>
+
     <!-- ANNOUNCEMENTS CARD -->
     <div class="card">
         <h3>📢 Annonces</h3>
