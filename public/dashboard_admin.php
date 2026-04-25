@@ -6,31 +6,24 @@ require_once "../utils/role_check.php";
 
 require_once "../config/bd.php";
 
-/* Statistiques */
-$count_students = 0;
-$count_teachers = 0;
-$count_admins = 0;
-$count_modules = 0;
+/* =========================
+   Statistiques générales
+========================= */
+function getCount($conn, $query)
+{
+    $result = mysqli_query($conn, $query);
 
-$result = mysqli_query($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'student'");
-if ($row = mysqli_fetch_assoc($result)) {
-    $count_students = $row["total"];
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        return $row["total"];
+    }
+
+    return 0;
 }
 
-$result = mysqli_query($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'teacher'");
-if ($row = mysqli_fetch_assoc($result)) {
-    $count_teachers = $row["total"];
-}
-
-$result = mysqli_query($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'admin'");
-if ($row = mysqli_fetch_assoc($result)) {
-    $count_admins = $row["total"];
-}
-
-$result = mysqli_query($conn, "SELECT COUNT(*) AS total FROM modules");
-if ($row = mysqli_fetch_assoc($result)) {
-    $count_modules = $row["total"];
-}
+$count_students = getCount($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'student'");
+$count_teachers = getCount($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'teacher'");
+$count_admins   = getCount($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'admin'");
+$count_modules  = getCount($conn, "SELECT COUNT(*) AS total FROM modules");
 ?>
 
 <!DOCTYPE html>
@@ -40,30 +33,37 @@ if ($row = mysqli_fetch_assoc($result)) {
     <title>Dashboard Administrateur</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
+
 <body>
 
 <div class="container">
 
     <h1>Dashboard Administrateur</h1>
 
+    <!-- Carte de bienvenue -->
     <div class="card">
         <h2>Bienvenue dans l'espace administrateur</h2>
 
         <p>
-            Bonjour <?php echo htmlspecialchars($_SESSION["first_name"] . " " . $_SESSION["last_name"]); ?> !
+            Bonjour
+            <?php echo htmlspecialchars($_SESSION["first_name"] . " " . $_SESSION["last_name"]); ?> !
         </p>
 
         <p>
             Rôle : <?php echo htmlspecialchars($_SESSION["role"]); ?>
         </p>
     </div>
-<br> <br>
+
+    <!-- Statistiques -->
     <div class="card">
-        <h2>📊 Statistiques </h2>
-      <p>Consulter les statistiques générales des étudiants et des résultats.</p>
-       <a class="btn" href="statistics_admin.php">Voir les statistiques</a> 
+        <h2>📊 Statistiques</h2>
+
+        <p>Consulter les statistiques générales des étudiants et des résultats.</p>
+
+        <a class="btn" href="statistics_admin.php">Voir les statistiques</a>
     </div>
-<br> <br>
+
+    <!-- Annonces -->
     <div class="card">
         <h2>📢 Annonces</h2>
 
@@ -72,7 +72,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         <a class="btn" href="announcements/create.php">Créer une annonce</a>
         <a class="btn" href="announcements/list.php">Voir les annonces</a>
     </div>
-<br> <br>
+
+    <!-- Gestion des utilisateurs -->
     <div class="card">
         <h2>👥 Gestion des utilisateurs</h2>
 
@@ -85,7 +86,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         <a class="btn" href="results_students.php">Résultats des étudiants</a>
         <a class="btn" href="student_report_admin.php">Relevé de notes étudiant</a>
     </div>
-<br> <br>
+
+    <!-- Gestion des modules -->
     <div class="card">
         <h2>📚 Gestion des modules</h2>
 
@@ -93,9 +95,52 @@ if ($row = mysqli_fetch_assoc($result)) {
 
         <a class="btn" href="modules_list.php">Voir les modules</a>
     </div>
-    <br>
-    <br>
-    <a class="btn" href="logout.php">Déconnexion</a>
+
+    <!-- Déconnexion -->
+    <div class="card">
+        <a class="btn" href="logout.php">Déconnexion</a>
+    </div>
+
+    <!-- Bloc étudiants réalisateurs -->
+    <div class="students-block">
+        <p class="students-label">Réalisé par</p>
+
+        <div class="students-grid">
+
+            <div class="student-entry">
+                <span class="student-name">Bouderraz Maroua</span>
+                <span class="student-meta">
+                    232335477206
+                    <span class="student-group">Groupe 4</span>
+                </span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Abaoui Melissa</span>
+                <span class="student-meta">
+                    212431859912
+                    <span class="student-group">Groupe 2</span>
+                </span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aissaoui Yousra</span>
+                <span class="student-meta">
+                    232331413601
+                    <span class="student-group">Groupe 4</span>
+                </span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aitouamar Aya</span>
+                <span class="student-meta">
+                    242431438719
+                    <span class="student-group">Groupe 2</span>
+                </span>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 

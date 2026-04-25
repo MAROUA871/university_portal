@@ -1,4 +1,7 @@
 <?php
+/* =========================
+   Sécurité & accès
+========================= */
 require_once "../utils/auth_check.php";
 
 $allowed_role = "teacher";
@@ -7,16 +10,23 @@ require_once "../utils/role_check.php";
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    <!-- =========================
+         Meta & styles
+    ========================== -->
     <meta charset="UTF-8">
     <title>Dashboard Enseignant</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
+
 <body>
 
 <div class="container">
 
-    <!-- Header -->
+    <!-- =========================
+         Header / Profil
+    ========================== -->
     <div class="card">
         <h1>Dashboard Enseignant</h1>
 
@@ -29,7 +39,9 @@ require_once "../utils/role_check.php";
         </p>
     </div>
 
-    <!-- Notes -->
+    <!-- =========================
+         Gestion des notes
+    ========================== -->
     <div class="card">
         <h2>📝 Gestion des notes</h2>
 
@@ -38,7 +50,9 @@ require_once "../utils/role_check.php";
         <a class="btn" href="notes/notes.php">Accéder aux notes</a>
     </div>
 
-    <!-- QR Attendance -->
+    <!-- =========================
+         Présences QR Code
+    ========================== -->
     <div class="card">
         <h2>📱 Gestion des présences (QR Code)</h2>
 
@@ -47,7 +61,9 @@ require_once "../utils/role_check.php";
         <a class="btn" href="start_session.php">Générer un QR Code</a>
     </div>
 
-    <!-- Announcements (FIXED PATH) -->
+    <!-- =========================
+         Annonces
+    ========================== -->
     <div class="card">
         <h2>📢 Annonces</h2>
 
@@ -57,7 +73,9 @@ require_once "../utils/role_check.php";
         <a class="btn" href="announcements/list.php">Voir les annonces</a>
     </div>
 
-    <!-- Students -->
+    <!-- =========================
+         Étudiants
+    ========================== -->
     <div class="card">
         <h2>🎓 Étudiants</h2>
 
@@ -66,9 +84,42 @@ require_once "../utils/role_check.php";
         <a class="btn" href="students_list.php">Voir les étudiants</a>
     </div>
 
-    <!-- Logout -->
+    <!-- =========================
+         Déconnexion
+    ========================== -->
     <div class="card">
         <a class="btn" href="logout.php">Déconnexion</a>
+    </div>
+
+    <!-- =========================
+         Réalisateurs (Bloc bas)
+    ========================== -->
+    <div class="students-block">
+        <p class="students-label">Réalisé par</p>
+
+        <div class="students-grid">
+
+            <div class="student-entry">
+                <span class="student-name">Bouderraz Maroua</span>
+                <span class="student-meta">232335477206 <span class="student-group">Groupe 4</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Abaoui Melissa</span>
+                <span class="student-meta">212431859912 <span class="student-group">Groupe 2</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aissaoui Yousra</span>
+                <span class="student-meta">232331413601 <span class="student-group">Groupe 4</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aitouamar Aya</span>
+                <span class="student-meta">242431438719 <span class="student-group">Groupe 2</span></span>
+            </div>
+
+        </div>
     </div>
 
 </div>

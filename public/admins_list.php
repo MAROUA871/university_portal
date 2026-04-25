@@ -1,4 +1,7 @@
 <?php
+/* =========================
+   Sécurité & accès
+========================= */
 require_once "../utils/auth_check.php";
 
 $allowed_role = "admin";
@@ -6,23 +9,34 @@ require_once "../utils/role_check.php";
 
 require_once "../config/bd.php";
 
-// Récupérer seulement les administrateurs
+/* =========================
+   Récupération des admins
+========================= */
 $sql = "SELECT * FROM users WHERE role = 'admin' ORDER BY id ASC";
 $result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Liste des administrateurs</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
+
 <body>
 
 <div class="container">
+
+    <!-- =========================
+         Titre
+    ========================== -->
     <h1>Liste des administrateurs</h1>
 
+    <!-- =========================
+         Messages
+    ========================== -->
     <?php
     if (isset($_GET["success"])) {
         echo "<p style='color:green; font-weight:bold;'>Administrateur supprimé avec succès.</p>";
@@ -33,97 +47,127 @@ $result = mysqli_query($conn, $sql);
     }
     ?>
 
+    <!-- =========================
+         Tableau
+    ========================== -->
     <div class="card">
+
         <div class="search-box">
             <label for="searchInput">Recherche rapide</label>
-            <input type="text" id="searchInput" placeholder="🔎Rechercher par nom, iderntifiant ...">
+            <input type="text" id="searchInput" placeholder="🔎 Rechercher par nom ou identifiant...">
         </div>
+
         <button class="btn export-btn" onclick="exportPDF()">Exporter PDF</button>
-    <div id="pdf-content">
-        <table border="1" width="100%" cellpadding="10" cellspacing="0" id="dataTable">
-            <tr>
-                
-                <th>Identifiant</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Actions</th>
-                <th>Etat</th>
-            </tr>
 
-            <?php while ($user = mysqli_fetch_assoc($result)) { ?>
+        <div id="pdf-content">
+            <table border="1" width="100%" cellpadding="10" cellspacing="0" id="dataTable">
                 <tr>
-                  
-                    <td><?php echo $user["identifier"]; ?></td>
-                    <td><?php echo $user["first_name"]; ?></td>
-                    <td><?php echo $user["last_name"]; ?></td>
-                    <td><?php echo $user["email"]; ?></td>
-
-                    
-                    <td class="actions">
-                        <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="edit-link">
-                            ✏️ Edit
-                        </a>
-                        <br>
-
-                        <a href="delete_user.php?id=<?php echo $user['id']; ?>" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet administrateur ?');">
-                            🗑️ Delete
-                        </a>
-                    </td>
-                    <td>
-                        <?php if ($user["status"] == 1): ?>
-                            <span class="status-dot active"></span>
-                        <?php else: ?>
-                            <span class="status-dot inactive"></span>
-                        <?php endif; ?>
-                    </td>
+                    <th>Identifiant</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                    <th>État</th>
                 </tr>
-            <?php } ?>
-        </table>
+
+                <?php while ($user = mysqli_fetch_assoc($result)) { ?>
+                    <tr>
+
+                        <td><?= htmlspecialchars($user["identifier"]); ?></td>
+                        <td><?= htmlspecialchars($user["first_name"]); ?></td>
+                        <td><?= htmlspecialchars($user["last_name"]); ?></td>
+                        <td><?= htmlspecialchars($user["email"]); ?></td>
+
+                        <td class="actions">
+                            <a href="edit_user.php?id=<?= $user['id']; ?>" class="edit-link">✏️ Edit</a>
+                            <br>
+                            <a href="delete_user.php?id=<?= $user['id']; ?>" class="delete-link"
+                               onclick="return confirm('Êtes-vous sûr ?');">
+                                🗑️ Delete
+                            </a>
+                        </td>
+
+                        <td>
+                            <?php if ($user["status"] == 1): ?>
+                                <span class="status-dot active"></span>
+                            <?php else: ?>
+                                <span class="status-dot inactive"></span>
+                            <?php endif; ?>
+                        </td>
+
+                    </tr>
+                <?php } ?>
+            </table>
+        </div>
+
     </div>
 
-    <a class="btn" href="dashboard_admin.php">Retour au dashboard</a>
+    <!-- =========================
+         Retour
+    ========================== -->
+    <div class="card">
+        <a class="btn" href="dashboard_admin.php">Retour au dashboard</a>
+    </div>
+
+    <!-- =========================
+         Bloc étudiants
+    ========================== -->
+    <div class="students-block">
+        <p class="students-label">Réalisé par</p>
+
+        <div class="students-grid">
+
+            <div class="student-entry">
+                <span class="student-name">Bouderraz Maroua</span>
+                <span class="student-meta">232335477206 <span class="student-group">Groupe 4</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Abaoui Melissa</span>
+                <span class="student-meta">212431859912 <span class="student-group">Groupe 2</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aissaoui Yousra</span>
+                <span class="student-meta">232331413601 <span class="student-group">Groupe 4</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aitouamar Aya</span>
+                <span class="student-meta">242431438719 <span class="student-group">Groupe 2</span></span>
+            </div>
+
+        </div>
+    </div>
+
 </div>
+
+<!-- =========================
+     Scripts
+========================= -->
 <script>
-    document.getElementById("searchInput").addEventListener("keyup", function() {
+document.getElementById("searchInput").addEventListener("keyup", function() {
     let filter = this.value.toLowerCase();
     let rows = document.querySelectorAll("#dataTable tr");
 
     rows.forEach((row, index) => {
         if (index === 0) return;
 
-        let identifier = row.cells[0]?.innerText.toLowerCase() || "";
-        let firstName  = row.cells[1]?.innerText.toLowerCase() || "";
-        let lastName   = row.cells[2]?.innerText.toLowerCase() || "";
-
-        if (
-            identifier.includes(filter) ||
-            firstName.includes(filter) ||
-            lastName.includes(filter)
-        ) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
-        }
+        let text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
     });
 });
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
 function exportPDF() {
     const element = document.getElementById("pdf-content");
 
-    const options = {
-        margin: 0.5,
-        filename: "liste_administrateurs.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "a4", orientation: "landscape" }
-    };
-
-    html2pdf().set(options).from(element).save();
+    html2pdf().from(element).save("liste_admins.pdf");
 }
 </script>
+
 </body>
 </html>

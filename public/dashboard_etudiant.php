@@ -1,4 +1,7 @@
 <?php
+/* =========================
+   Session & sécurité
+========================= */
 session_start();
 
 require_once "../utils/auth_check.php";
@@ -9,18 +12,28 @@ require_once "../utils/role_check.php";
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    <!-- =========================
+         Meta & styles
+    ========================== -->
     <meta charset="UTF-8">
     <title>Dashboard Étudiant</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
+
 <body>
 
 <div class="container">
 
+    <!-- =========================
+         Titre principal
+    ========================== -->
     <h2>Dashboard Étudiant</h2>
 
-    <!-- WELCOME CARD -->
+    <!-- =========================
+         Bienvenue / Profil
+    ========================== -->
     <div class="card">
         <h1>Bienvenue</h1>
 
@@ -33,15 +46,20 @@ require_once "../utils/role_check.php";
         </p>
     </div>
 
+    <!-- =========================
+         Mes notes
+    ========================== -->
     <div class="card">
-       <h2>📝 Mes notes</h2>
+        <h2>📝 Mes notes</h2>
 
-       <p>Consultez vos notes TD, Examen, moyenne et statut par module.</p>
+        <p>Consultez vos notes TD, Examen, moyenne et statut par module.</p>
 
-       <a class="btn" href="notes/my_notes.php">Voir mes notes</a>
-   </div>
+        <a class="btn" href="notes/my_notes.php">Voir mes notes</a>
+    </div>
 
-    <!-- ANNOUNCEMENTS CARD -->
+    <!-- =========================
+         Annonces
+    ========================== -->
     <div class="card">
         <h3>📢 Annonces</h3>
 
@@ -49,16 +67,50 @@ require_once "../utils/role_check.php";
             Consultez les annonces des enseignants et de l'administration.
         </p>
 
-        <!-- DIRECT LINK TO LIST.PHP -->
         <a class="btn" href="announcements/list.php">
             Voir les annonces
         </a>
     </div>
 
-    <!-- LOGOUT -->
-    <a class="btn" href="logout.php">
-        Déconnexion
-    </a>
+    <!-- =========================
+         Déconnexion
+    ========================== -->
+    <div class="card">
+        <a class="btn" href="logout.php">
+            Déconnexion
+        </a>
+    </div>
+
+    <!-- =========================
+         Réalisateurs
+    ========================== -->
+    <div class="students-block">
+        <p class="students-label">Réalisé par</p>
+
+        <div class="students-grid">
+
+            <div class="student-entry">
+                <span class="student-name">Bouderraz Maroua</span>
+                <span class="student-meta">232335477206 <span class="student-group">Groupe 4</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Abaoui Melissa</span>
+                <span class="student-meta">212431859912 <span class="student-group">Groupe 2</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aissaoui Yousra</span>
+                <span class="student-meta">232331413601 <span class="student-group">Groupe 4</span></span>
+            </div>
+
+            <div class="student-entry">
+                <span class="student-name">Aitouamar Aya</span>
+                <span class="student-meta">242431438719 <span class="student-group">Groupe 2</span></span>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 

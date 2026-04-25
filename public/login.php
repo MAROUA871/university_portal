@@ -110,10 +110,50 @@ if (isset($_GET["error"])) {
         </form>
 
         <div class="login-links">
-            <a class="small-link" href="index.php">Retour à l'accueil</a>
+            <a class="btn" href="index.php">Retour à l'accueil</a>
+        </div>
+      <!-- Bloc étudiants réalisateurs -->
+<div class="students-block">
+    <p class="students-label">Réalisé par</p>
+
+    <div class="students-grid">
+
+        <div class="student-entry">
+            <span class="student-name">Bouderraz Maroua</span>
+            <span class="student-meta">
+                232335477206
+                <span class="student-group">Groupe 4</span>
+            </span>
+        </div>
+
+        <div class="student-entry">
+            <span class="student-name">Abaoui Melissa</span>
+            <span class="student-meta">
+                212431859912
+                <span class="student-group">Groupe 2</span>
+            </span>
+        </div>
+
+        <div class="student-entry">
+            <span class="student-name">Aissaoui Yousra</span>
+            <span class="student-meta">
+                232331413601
+                <span class="student-group">Groupe 4</span>
+            </span>
+        </div>
+
+        <div class="student-entry">
+            <span class="student-name">Aitouamar Aya</span>
+            <span class="student-meta">
+                242431438719
+                <span class="student-group">Groupe 2</span>
+            </span>
         </div>
 
     </div>
+</div>
+    </div>
+    
 </div>
 
 </body>
