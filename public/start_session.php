@@ -1,95 +1,90 @@
 <?php
-// start_session.php
+session_start();
 
-// 🔌 Connect to database
-$db = new PDO("mysql:host=localhost;dbname=university_portal_bd", "root", "");
+// 🔌 DB connection
+$db = new PDO("mysql:host=localhost;dbname=university_portal_db", "root", "");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// 👨‍🏫 Teacher ID (temporary)
-$user_id = 1;
+// 👨‍🏫 Teacher ID
+$user_id = $_SESSION['id'];
 
-// ➕ Include QR library
+// ➕ QR + model
 require_once __DIR__ . '/../utils/phpqrcode/qrlib.php';
-
-// ➕ Include attendance session model
 require_once __DIR__ . '/../app/models/attendance_session.php';
 
-// ➕ Create session
-$token = createSession($db, $user_id);
+// ✅ GET MODULES (IMPORTANT)
+$stmt = $db->prepare("SELECT id, code, name FROM modules WHERE teacher_id = ?");
+$stmt->execute([$user_id]);
+$modules_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// 📁 Create folder if not exists
-$folder = __DIR__ . '/qr_codes';
-if (!file_exists($folder)) {
-    mkdir($folder, 0755, true);
+$qr_path = null;
+$token = null;
+
+// ✅ FORM SUBMIT
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $module_id = $_POST['module_id'];
+
+    // create session with module
+    $token = createSession($db, $user_id, $module_id);
+
+    // create folder if needed
+    $folder = __DIR__ . '/qr_codes';
+    if (!file_exists($folder)) {
+        mkdir($folder, 0755, true);
+    }
+
+    // generate QR
+    $url = "http://localhost/university_portal/public/scan.php?token=" . $token;
+    QRcode::png($url, $folder . "/session_$token.png");
+
+    $qr_path = "qr_codes/session_$token.png";
 }
-
-// 🖼️ Generate QR code
-$url = "http://localhost/university_portal/public/scan.php?token=" . $token;
-QRcode::png($url, $folder . "/session_$token.png");
-
-// Path for display
-$qr_path = "qr_codes/session_$token.png";
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session de présence</title>
-    <link rel="stylesheet" href="assets/style.css"> 
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
 <div class="container">
-    <div class="card">
+<div class="card">
 
-        <!-- Logos -->
-        <div class="top-logos">
-            <div class="logo-side">
-                <img src="assets/logo_university.png?v=2" class="side-logo">
-            </div>
+    <h1>Session de présence</h1>
 
-            <div class="logo-center">
-                <img src="assets/university_portal_logo.png?v=3" class="university-portal-logo">
-            </div>
+    <!-- MODULE SELECT -->
+    <form method="POST">
+        <select name="module_id" required>
+            <option value="">-- Choisir un module --</option>
 
-            <div class="logo-side">
-                <img src="assets/logo_faculty.png?v=2" class="side-logo">
-            </div>
-        </div>
+            <?php foreach ($modules_list as $module): ?>
+                <option value="<?= $module['id'] ?>">
+                    <?= htmlspecialchars($module['code'] . ' - ' . $module['name']) ?>
+                </option>
+            <?php endforeach; ?>
 
-        <!-- Title -->
-        <h1 class="main-title">Session de présence</h1>
+        </select>
 
-        <!-- Description -->
-        <p class="description-fr">
-            Les étudiants doivent scanner ce QR code pour enregistrer leur présence.
-        </p>
+        <br><br>
+        <button class="btn" type="submit">Générer QR</button>
+    </form>
 
-        <p class="description-ar" dir="rtl">
-            يجب على الطلبة مسح رمز QR لتسجيل حضورهم
-        </p>
+    <br>
 
-        <!-- QR Code Section -->
-        <div class="section-block">
-            <h2 class="section-title">📱 QR Code</h2>
-            <img src="<?php echo $qr_path; ?>" alt="QR Code" style="max-width: 250px; margin-top: 15px;">
-        </div>
+    <!-- QR RESULT -->
+    <?php if ($qr_path): ?>
+        <img src="<?= $qr_path ?>" style="max-width:250px;">
+        <p>Token: <?= htmlspecialchars($token) ?></p>
+    <?php endif; ?>
 
-        <!-- Optional info -->
-        <div class="section-block">
-            <p class="small-text">
-                Token de session : <?php echo htmlspecialchars($token); ?>
-            </p>
-        </div>
+    <br>
+    <a class="btn" href="qrview.php">Retour</a>
 
-        <!-- Back button -->
-        <div class="login-links">
-            <a class="small-link" href="qrview.php">Retour</a>
-        </div>
-
-    </div>
+</div>
 </div>
 
 </body>

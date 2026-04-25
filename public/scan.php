@@ -8,11 +8,11 @@ $db = new PDO("mysql:host=localhost;dbname=university_portal_db", "root", "");
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // 1. CHECK LOGIN
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
     die("You must be logged in");
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['id'];
 
 // Get token
 $token = $_GET['token'] ?? null;
@@ -34,10 +34,12 @@ if ($checkStmt->fetch()) {
 }
 
 // 3. INSERT
-$sql = "INSERT INTO attendance (user_id, session_id, scaned_at, status)
-        VALUES (?, ?, NOW(), 'present')";
+$module_id = $session['module_id'];
+
+$sql = "INSERT INTO attendance (user_id, session_id, module_id, scaned_at)
+        VALUES (?, ?, ?, NOW())";
 $stmt = $db->prepare($sql);
-$stmt->execute([$user_id, $session_id]);
+$stmt->execute([$user_id, $session_id, $module_id]);
 
 echo "<h2>✅ Attendance recorded</h2>";
 ?>
