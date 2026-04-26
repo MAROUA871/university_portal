@@ -107,7 +107,7 @@ if ($result) {
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <a class="btn" href="../../public/dashboard_etudiant.php">
+    <a class="btn" href="../../public/dashboard_admin.php">
         ⬅ Retour au tableau de bord
     </a>
 

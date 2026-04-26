@@ -75,14 +75,9 @@ require_once "../utils/role_check.php";
     <div class="card">
         <h3>📷 Présence</h3>
 
-<<<<<<< HEAD
 
         <p> Gérer votre présence aux séances.</p>
 
-=======
-        <p> Gérer votre présence aux séances.</p>
-
->>>>>>> 87078b0ceea8f316ced7e8e25f7c268db004ebb4
         <!-- VIEW ATTENDANCE -->
         <a class="btn" href="attendance_history.php">Voir ma présence</a>
 
@@ -95,17 +90,18 @@ require_once "../utils/role_check.php";
     <a class="btn" href="logout.php">
         Déconnexion
     </a>
-<<<<<<< HEAD
+
  <div class="students-block">
-=======
+    
+
 <!-- =========================
-         Réalisateurs
-    ========================== -->
+         Réalisate
+    ========================== -->  
     <div class="students-block">
->>>>>>> 87078b0ceea8f316ced7e8e25f7c268db004ebb4
+
         <p class="students-label">Réalisé par</p>
 
-        <div class="students-grid">
+        <div class="students-grid"> 
 
             <div class="student-entry">
                 <span class="student-name">Bouderraz Maroua</span>
