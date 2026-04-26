@@ -3139,8 +3139,8 @@ ALTER TABLE `attendance`
 --
 ALTER TABLE `attendance_session`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `attendance_session_ibfk_1` (`user_id`);
-   ADD KEY `fk_attendance_session_module` (`module_id`);
+  ADD KEY `attendance_session_ibfk_1` (`user_id`),
+  ADD KEY `fk_attendance_session_module` (`module_id`);
 --
 -- Indexes for table `modules`
 --
@@ -3160,8 +3160,8 @@ ALTER TABLE `notes`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
+  ADD PRIMARY KEY (`id`);
+  
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -3190,6 +3190,7 @@ ALTER TABLE `notes`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'technical id for the db', AUTO_INCREMENT=158;
+  
 
 --
 -- Constraints for dumped tables
@@ -3213,9 +3214,9 @@ ALTER TABLE `attendance`
 -- Constraints for table `attendance_session`
 --
 ALTER TABLE `attendance_session`
-  ADD CONSTRAINT `attendance_session_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `attendance_session_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `fk_attendance_session_module` FOREIGN KEY (`module_id`) REFERENCES `modules` (`id`);
-COMMIT;
+
 --
 -- Constraints for table `modules`
 --
@@ -3228,7 +3229,7 @@ ALTER TABLE `modules`
 ALTER TABLE `notes`
   ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `modules` (`id`);
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
