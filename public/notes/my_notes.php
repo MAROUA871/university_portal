@@ -80,7 +80,7 @@ if ($moyenne_generale !== null) {
 <head>
     <meta charset="UTF-8">
     <title>Mes notes</title>
-    <link rel="stylesheet" href="../assets/style.css?v=15">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 
