@@ -54,6 +54,25 @@ while ($row = mysqli_fetch_assoc($result)) {
 $moyenne_generale = ($somme_coefficients > 0)
     ? round($somme_moyenne_coeff / $somme_coefficients, 2)
     : null;
+
+/* =========================
+   MENTION SELON BAREME
+========================= */
+$mention = "-";
+
+if ($moyenne_generale !== null) {
+    if ($moyenne_generale >= 16) {
+        $mention = "Excellent";
+    } elseif ($moyenne_generale >= 14) {
+        $mention = "Très bien";
+    } elseif ($moyenne_generale >= 12) {
+        $mention = "Bien";
+    } elseif ($moyenne_generale >= 10) {
+        $mention = "Assez bien";
+    } else {
+        $mention = "Insuffisant";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +80,7 @@ $moyenne_generale = ($somme_coefficients > 0)
 <head>
     <meta charset="UTF-8">
     <title>Mes notes</title>
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css?v=15">
 </head>
 <body>
 
@@ -87,6 +106,11 @@ $moyenne_generale = ($somme_coefficients > 0)
                     <?php else: ?>
                         <span class="status-fail">Ajourné</span>
                     <?php endif; ?>
+                </div>
+
+                <div class="stat-item">
+                    🏅 Mention :
+                    <?php echo $mention; ?>
                 </div>
             </div>
 
@@ -119,6 +143,8 @@ $moyenne_generale = ($somme_coefficients > 0)
                     </tr>
                 <?php endforeach; ?>
             </table>
+
+           
 
         </div>
 

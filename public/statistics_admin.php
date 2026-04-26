@@ -83,7 +83,6 @@ $results = [];
 $total = 0;
 $admis = 0;
 $ajournes = 0;
-$excellents = 0;
 $somme = 0;
 
 foreach ($students as $s) {
@@ -96,10 +95,11 @@ foreach ($students as $s) {
         $total++;
         $somme += $moy;
 
-        if ($moy >= 10) $admis++;
-        else $ajournes++;
-
-        if ($moy >= 16) $excellents++;
+        if ($moy >= 10) {
+            $admis++;
+        } else {
+            $ajournes++;
+        }
 
         $s["moyenne_generale"] = $moy;
         $s["statut"] = $statut;
@@ -124,14 +124,8 @@ $taux = ($total > 0) ? round(($admis / $total) * 100, 2) : 0;
 
 <div class="container">
 
-    <!-- =========================
-         Titre
-    ========================== -->
     <h1>Statistiques des étudiants</h1>
 
-    <!-- =========================
-         Résumé
-    ========================== -->
     <div class="card">
         <h2>📊 Résumé général</h2>
 
@@ -139,15 +133,11 @@ $taux = ($total > 0) ? round(($admis / $total) * 100, 2) : 0;
             <div class="stat-item">👨‍🎓 Total : <?= $total ?></div>
             <div class="stat-item">🟢 Admis : <?= $admis ?></div>
             <div class="stat-item">🔴 Ajournés : <?= $ajournes ?></div>
-            <div class="stat-item">🌟 ≥16 : <?= $excellents ?></div>
-            <div class="stat-item">📊 Moyenne : <?= number_format($moyenne_promo,2) ?></div>
-            <div class="stat-item">✅ Taux : <?= number_format($taux,2) ?>%</div>
+            <div class="stat-item">📊 Moyenne : <?= number_format($moyenne_promo, 2) ?></div>
+            <div class="stat-item">✅ Taux : <?= number_format($taux, 2) ?>%</div>
         </div>
     </div>
 
-    <!-- =========================
-         Tableau
-    ========================== -->
     <div class="card">
         <h2>📋 Résultats détaillés</h2>
 
@@ -166,7 +156,6 @@ $taux = ($total > 0) ? round(($admis / $total) * 100, 2) : 0;
                     <th>Email</th>
                     <th>Moyenne</th>
                     <th>Statut</th>
-                    <th>Catégorie</th>
                 </tr>
 
                 <?php foreach ($results as $s): ?>
@@ -176,15 +165,16 @@ $taux = ($total > 0) ? round(($admis / $total) * 100, 2) : 0;
                     <td><?= htmlspecialchars($s["last_name"]) ?></td>
                     <td><?= htmlspecialchars($s["email"]) ?></td>
 
-                    <td><?= number_format($s["moyenne_generale"],2) ?></td>
-                    <td><?= $s["statut"] ?></td>
+                    <td class="<?= ($s["moyenne_generale"] >= 10) ? 'good' : 'bad' ?>">
+                        <?= number_format($s["moyenne_generale"], 2) ?>
+                    </td>
 
                     <td>
-                        <?php
-                        if ($s["moyenne_generale"] >= 16) echo "Excellent";
-                        elseif ($s["moyenne_generale"] >= 10) echo "Validé";
-                        else echo "Ajourné";
-                        ?>
+                        <?php if ($s["statut"] == "Admis"): ?>
+                            <span class="status-pass">Admis</span>
+                        <?php else: ?>
+                            <span class="status-fail">Ajourné</span>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -193,12 +183,8 @@ $taux = ($total > 0) ? round(($admis / $total) * 100, 2) : 0;
         </div>
     </div>
 
-    <!-- Retour -->
     <a class="btn" href="dashboard_admin.php">Retour</a>
 
-    <!-- =========================
-         Bloc étudiants
-    ========================== -->
     <div class="students-block">
         <p class="students-label">Réalisé par</p>
 
