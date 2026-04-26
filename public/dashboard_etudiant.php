@@ -75,20 +75,22 @@ require_once "../utils/role_check.php";
     <div class="card">
         <h3>📷 Présence</h3>
 
-<<<<<<< HEAD
-    <!-- =========================
-         Déconnexion
-    ========================== -->
-    <div class="card">
-        <a class="btn" href="logout.php">
-            Déconnexion
-        </a>
-    </div>
 
-    <!-- =========================
-         Réalisateurs
-    ========================== -->
-    <div class="students-block">
+        <p> Gérer votre présence aux séances.</p>
+
+        <!-- VIEW ATTENDANCE -->
+        <a class="btn" href="attendance_history.php">Voir ma présence</a>
+
+        <br><br>
+
+        <!-- RECORD ATTENDANCE -->
+        <a class="btn" href="record_attendance.php">Enregistrer ma présence</a>
+    </div>
+    <!-- LOGOUT -->
+    <a class="btn" href="logout.php">
+        Déconnexion
+    </a>
+ <div class="students-block">
         <p class="students-label">Réalisé par</p>
 
         <div class="students-grid">
@@ -115,22 +117,6 @@ require_once "../utils/role_check.php";
 
         </div>
     </div>
-=======
-        <p> Gérer votre présence aux séances.</p>
-
-        <!-- VIEW ATTENDANCE -->
-        <a class="btn" href="attendance_history.php">Voir ma présence</a>
-
-        <br><br>
-
-        <!-- RECORD ATTENDANCE -->
-        <a class="btn" href="record_attendance.php">Enregistrer ma présence</a>
-    </div>
-    <!-- LOGOUT -->
-    <a class="btn" href="logout.php">
-        Déconnexion
-    </a>
-
 
 </div>
 
