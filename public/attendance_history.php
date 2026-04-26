@@ -52,7 +52,7 @@ $attendances = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <?php foreach ($attendances as $row): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['module_name']) ?></td>
+                        <td><?= htmlspecialchars($row['module_name'] ?? 'Module non défini') ?></td>
                         <td><?= htmlspecialchars($row['scaned_at']) ?></td>
                     </tr>
                 <?php endforeach; ?>
