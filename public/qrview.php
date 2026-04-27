@@ -1,23 +1,24 @@
-<!--P14-->
-<!--ABAOUI MELISSA LYNA 
-212431859912
-GROUPE 2
--->
-<!--Bouderraz Maroua    
-232335477206
-GROUPE 4    
--->
-<!--Aitouamar Aya
-242431438719
-GROUPE 2
--->
-<!-- Aissaoui Yousra
- 232331413601
- GROUPE 4
--->
 <?php
 session_start();
+
+// Vérifier connexion
+if (!isset($_SESSION["id"])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Déterminer le dashboard selon le rôle
+$dashboard = "dashboard_etudiant.php";
+
+if (isset($_SESSION["role"])) {
+    if ($_SESSION["role"] == "teacher") {
+        $dashboard = "dashboard_enseignant.php";
+    } elseif ($_SESSION["role"] == "admin") {
+        $dashboard = "dashboard_admin.php";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -31,7 +32,7 @@ session_start();
 <div class="container">
     <div class="card">
 
-        <!-- Logos (same structure as accueil.php) -->
+        <!-- Logos -->
         <div class="top-logos">
 
             <div class="logo-side">
@@ -39,11 +40,11 @@ session_start();
             </div>
 
             <div class="logo-center">
-                <img src="assets/university_portal_logo.png?v=3" class="university-portal-logo">
+                <img src="assets/university_portal_logo.png" class="university-portal-logo">
             </div>
 
             <div class="logo-side">
-                <img src="assets/logo_faculty.png?v=2" class="side-logo">
+                <img src="assets/logo_faculty.png" class="side-logo">
             </div>
 
         </div>
@@ -63,6 +64,7 @@ session_start();
         <!-- Teacher Section -->
         <div class="section-block">
             <h2 class="section-title">👨‍🏫 Enseignant</h2>
+
             <a href="start_session.php" class="role-btn teacher-btn">
                 Démarrer une séance de présence
             </a>
@@ -71,10 +73,16 @@ session_start();
         <!-- Student Section -->
         <div class="section-block">
             <h2 class="section-title">🎓 Étudiant</h2>
+
             <p class="description-fr">
                 Scannez le QR code fourni par votre enseignant pour enregistrer votre présence.
             </p>
         </div>
+
+        <!-- ===== BOUTON RETOUR ===== -->
+        <a href="<?php echo $dashboard; ?>" class="btn" style="margin-top:20px;">
+            ⬅ Retour au tableau de bord
+        </a>
 
     </div>
 </div>
