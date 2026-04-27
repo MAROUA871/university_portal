@@ -1,3 +1,16 @@
+<!--P14-->
+<!--ABAOUI MELISSA LYNA 
+212431859912
+GROUPE 2
+-->
+<!--Bouderraz Maroua    
+232335477206
+GROUPE 4    
+-->
+<!--Aitouamar Aya
+242431438719
+GROUPE 2
+-->
 <?php
 session_start();
 
@@ -107,7 +120,7 @@ if ($result) {
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <a class="btn" href="../../public/dashboard_admin.php">
+    <a class="btn" href="../../public/dashboard_etudiant.php">
         ⬅ Retour au tableau de bord
     </a>
 

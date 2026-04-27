@@ -1,3 +1,4 @@
+
 <?php
 
 function teacher_owns_module($conn, $teacher_id, $module_id) {
