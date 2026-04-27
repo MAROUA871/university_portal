@@ -11,6 +11,10 @@ GROUPE 4
 242431438719
 GROUPE 2
 -->
+<!-- Aissaoui Yousra
+ 232331413601
+ GROUPE 4
+-->
 <?php
 //=========================================================
 // File: app/controllers/AnnouncementController.php
@@ -24,13 +28,13 @@ require_once __DIR__ . '/../models/announcement.php';
 session_start();
 
 // ── SECURITY ────────────────────────────────────────────
-if (!isset($_SESSION['role'], $_SESSION['user_id'])) {
+if (!isset($_SESSION['role'], $_SESSION['id'])) {
     header('Location: ../../public/index.php');
     exit();
 }
 
 $role = $_SESSION['role'];
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['id'];
 
 // ── VARIABLES ───────────────────────────────────────────
 $success = '';

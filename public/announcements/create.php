@@ -11,13 +11,30 @@ GROUPE 4
 242431438719
 GROUPE 2
 -->
+<!-- Aissaoui Yousra
+ 232331413601
+ GROUPE 4
+-->
+ <!-- Aissaoui Yousra
+ 232331413601
+ GROUPE 4
+-->
 <?php
 
 session_start();
 
-$role = $_SESSION['role'] ?? null;
-$user_id = $_SESSION['id'];
+if (!isset($_SESSION["id"], $_SESSION["role"])) {
+    header("Location: ../login.php");
+    exit();
+}
 
+$role = $_SESSION["role"];
+$user_id = $_SESSION["id"];
+// Only teachers and admins can access this page
+if (!in_array($role, ["admin", "teacher"])) {
+    header("Location: ../dashboard_etudiant.php");
+    exit();
+}
 require_once '../../config/bd.php';
 
 if (!$conn) {
@@ -151,9 +168,9 @@ if ($role === 'teacher') {
 
     <?php
     $dashboard = match($role) {
-        'teacher' => '../../public/dashboard_enseignant.php',
-        'admin'   => '../../public/dashboard_admin.php',
-        default   => '../../public/accueil.php',
+        'teacher' => '../dashboard_enseignant.php',
+        'admin'   => '../dashboard_admin.php',
+        default   => '../index.php',
     };
     ?>
 

@@ -11,9 +11,16 @@ GROUPE 4
 242431438719
 GROUPE 2
 -->
+<!-- Aissaoui Yousra
+ 232331413601
+ GROUPE 4
+-->
 <?php
 session_start();
-
+if (!isset($_SESSION["id"])) {
+    header("Location: ../login.php");
+    exit();
+}
 require_once "../../config/bd.php";
 
 if (!$conn) {
@@ -47,6 +54,18 @@ $announcements = [];
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         $announcements[] = $row;
+    }
+}
+// Close DB connection
+$conn->close();
+
+$back_link = "../dashboard_etudiant.php";
+
+if (isset($_SESSION["role"])) {
+    if ($_SESSION["role"] == "admin") {
+        $back_link = "../dashboard_admin.php";
+    } elseif ($_SESSION["role"] == "teacher") {
+        $back_link = "../dashboard_enseignant.php";
     }
 }
 ?>
@@ -119,8 +138,8 @@ if ($result) {
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
-
-    <a class="btn" href="../../public/dashboard_etudiant.php">
+    
+    <a class="btn" href="<?= $back_link ?>">
         ⬅ Retour au tableau de bord
     </a>
 
