@@ -424,19 +424,21 @@ select:focus {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: 11px;
 }
 
 table th {
   background-color: #1f3c88;
   color: white;
-  padding: 12px;
+  padding: 6px;
+  font-size: 12px;
 }
 
 table td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 5px;
+  font-size: 11px;
 }
 
 table tr:nth-child(even) {
@@ -543,13 +545,17 @@ table tr:hover {
 ========================= */
 table td:last-child {
   font-weight: bold;
+  font-size: 12px;
+  margin-top: 12px;
 }
 table td {
   text-align: center;
+  padding: 6px;
 }
 
 table th {
   text-align: center;
+  padding: 7px;
 }
 /* =========================
    STATUT ETUDIANT
@@ -581,19 +587,19 @@ table th {
   display: flex;
   justify-content: center;
   gap: 22px;
-  margin: 30px auto;
+  margin: 10px auto;
   flex-wrap: wrap;
 }
 
 .stat-item {
-  min-width: 220px;
-  padding: 22px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #ffffff, #eef4ff);
-  border: 1px solid #dbe6ff;
+  min-width: 150px;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f8f9fb;
+  border: 1px solid #ccc;
   box-shadow: 0 10px 25px rgba(31, 60, 136, 0.15);
   text-align: center;
-  font-size: 17px;
+  font-size: 13px;
   font-weight: bold;
   color: #1f3c88;
   transition: 0.3s;
@@ -653,4 +659,48 @@ table th {
 
 .status-dot.inactive {
   background-color: #6c757d; /* gris */
+}
+/* =========================
+   HEADER PDF RELEVE NOTES
+========================= */
+.pdf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.pdf-logo {
+  width: 90px;
+  height: auto;
+}
+
+.pdf-title {
+  text-align: center;
+  flex: 1;
+}
+
+.pdf-title h2 {
+  margin: 0;
+  color: #1f3c88;
+  font-size: 18px;
+}
+
+.pdf-title p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #555;
+}
+#pdf-content {
+  transform-origin: top left;
+  width: 95%;
+  max-width: 1050px;
+  margin: 0 auto;
+  border: 2px solid #1f3c88;
+  padding: 10px;
+}
+/* infos étudiant */
+.student-info p {
+  font-size: 12px;
+  margin: 3px 0;
 }

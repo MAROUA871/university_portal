@@ -191,7 +191,7 @@ $moyenne_generale = ($total > 0) ? round($somme_moyennes / $total, 2) : 0;
         
             <button class="btn export-btn" onclick="exportPDF()">Exporter PDF</button>
         
-
+          <br><br>
         <div id="pdf-content">
             <?php if (!$is_admin): ?>
                 <div class="stats-box">

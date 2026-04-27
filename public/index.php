@@ -85,7 +85,7 @@ session_start();
                 </div>
 
                 <div class="student-entry">
-                    <span class="student-name">Abaoui Melissa</span>
+                    <span class="student-name">Abaoui Melissa Lyna</span>
                     <span class="student-meta">212431859912<span class="student-group">Groupe 2</span></span>
                 </div>
 

@@ -56,6 +56,7 @@ $result = mysqli_query($conn, $sql);
             <input type="text" id="searchInput" placeholder="🔎 Rechercher par nom, iderntifiant ...">
         </div>
         <button class="btn export-btn" onclick="exportPDF()">Exporter PDF</button>
+        <br><br>
       <div id="pdf-content">
         <table border="1" width="100%" cellpadding="10" cellspacing="0" id="dataTable">
             <tr>
