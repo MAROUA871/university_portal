@@ -41,9 +41,11 @@ CREATE TABLE `announcements` (
 --
 
 INSERT INTO `announcements` (`id`, `user_id`, `title`, `content`, `posted_at`, `module_id`) VALUES
-(0, 13, 'test ', 'this announce is  to test whether the created announces are stored in the database ( announcements table), and to test create.php as  well as list.php( see what the student/ admin view)', '2026-04-13 15:17:20', 1),
-(0, 13, 'TEST', 'test', '2026-04-13 15:44:04', NULL),
-(0, 13, 'TEST', '<HTML>\r\n<Head><title>Pweb</title><link rel=\"icon\" href=\"img/usthb.png\">\r\n</Head>\r\n<body>\r\n<center><img src=\"img/alg2.png\" height=\"36\" width=\"837\" /></center></br>\r\n<center><img src=\"img/alg.png\" height=\"61\" width=\"496\" /></center>\r\n<center>\r\n       <font color=\"#FF0000\"><font size=\"+3\">M</font></font><font size=\"+1\">inistere de l\'</font><font size=\"+3\">E</font>nseignement <font color=\"#CC0099\"><font size=\"+3\">S</font>uperieur et de la <font size=\"+3\" color=\"#FF33CC\">R</font>echerche <font size=\"+3\" color=\"#999999\">S</font>cientifique</div>\r\n	   <hr />\r\n\r\n<div align=\"center\">\r\n\r\n<center>< marquee onmouseover=\"this.stop()\" onmouseout=\"this.start()\"><a href=\"https://www.urthb.dz/\" target=\"_blank\">\r\n\r\n<img src=\"img/usthb.png\" width=\"80\" height=\"80\" /> </a>\r\n\r\n<a href=\"univ-const.html\" target=\"_blank\">\r\n\r\n<img src=\"img/conat2.jfif\" width=\"80\" height=\"80\" /></a>\r\n\r\n<img src=\"img/tam.jpg\" width=\"80\" height=\"80\" />\r\n\r\n<img src=\"img/skikda.JFIF\" width=\"80\" height=\"80\"/>\r\n\r\n<img src=\"img/taref.jfif\" width=\"80\" height=\"80\" />\r\n\r\n<img src=\"img/ten.jfif\" width=\"80\" height=\"80\"/>\r\n\r\n<img src=\"img/set.jfif\" width=\"80\" height=\"80\"/>\r\n\r\n<img src=\"img/bech.jfif\" width=\"80\" height=\"80\"/>\r\n\r\n<img src=\"img/bech.jfif\" width=\"80\" height=\"80/>\r\n\r\n<img src=\"img/blida.jfif\" width=\"80\" height=\"80/>\r\n<img src=\"img/bou.jfif\" width=\"80\" height=\"80/>\r\n\r\n</marquee>\r\n</center></div>\r\n</hr>\r\n\r\n</body>\r\n</HTML>\r\n', '2026-04-20 13:07:30', 6);
+(1, 2, 'Exam Schedule', 'The exam for MATH1 will be held on May 10th at 10 AM in Room 101.', '2026-04-20 09:00:00', 1),
+(2, 3, 'Project Deadline', 'The project for MATH2 is due on April 30th. Please submit it via the portal.', '2026-04-21 14:30:00', 2),
+(3, 18, 'Lab Session', 'PHY1 lab session will be on April 25th at 2 PM in Lab A.', '2026-04-22 11:15:00', 3),
+(4, 5, 'Lecture Cancellation', 'PHY2 lecture on April 28th is cancelled due to unforeseen circumstances.', '2026-04-22 12:00:00', 4),
+(5, 6, 'Graph Theory Assignment', 'The assignment for GRAPH is released. It is due on May 5th.', '2026-04-22 13:45:00', 5);
 
 -- --------------------------------------------------------
 
@@ -60,7 +62,15 @@ CREATE TABLE `attendance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
-
+INSERT INTO `attendance` (`id`, `user_id`, `session_id`, `status`, `scaned_at`) VALUES
+(1, 19, 33, 'present', '2026-04-03 21:40:00'),
+(2, 20, 33, 'absent', '2026-04-03 21:40:00'),
+(3, 21, 33, 'present', '2026-04-03 21:40:00'),
+(4, 22, 33, 'present', '2026-04-03 21:40:00'),
+(5, 23, 33, 'absent', '2026-04-03 21:40:00'),
+(6, 24, 33, 'present', '2026-04-03 21:40:00'),
+(7, 25, 33, 'present', '2026-04-03 21:40:00'),
+(8, 26, 33, 'absent', '2026-04-03 21:40:00');
 --
 -- Table structure for table `attendance_session`
 --
@@ -3124,6 +3134,7 @@ INSERT INTO `users` (`id`, `identifier`, `password`, `role`, `first_name`, `last
 -- Indexes for table `announcements`
 --
 ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `module_id` (`module_id`);
 
@@ -3131,6 +3142,7 @@ ALTER TABLE `announcements`
 -- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `session_id` (`session_id`);
 
@@ -3164,9 +3176,16 @@ ALTER TABLE `users`
   
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT for announcements
+--
+ALTER TABLE `announcements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `attendance`
 --
 
+ALTER TABLE `attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `attendance_session`
 --

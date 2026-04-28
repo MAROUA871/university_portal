@@ -1,20 +1,3 @@
-<!--P14-->
-<!--ABAOUI MELISSA LYNA 
-212431859912
-GROUPE 2
--->
-<!--Bouderraz Maroua    
-232335477206
-GROUPE 4    
--->
-<!--Aitouamar Aya
-242431438719
-GROUPE 2
--->
-<!-- Aissaoui Yousra
- 232331413601
- GROUPE 4
--->
 <?php
 session_start();
 
@@ -33,15 +16,19 @@ $user_id = $_SESSION['id'];
 
 // Get token
 $token = $_GET['token'] ?? null;
-if (!$token) die("Invalid QR code");
+if (!$token) {
+    die("Invalid QR code");
+}
 
-// Get session
+// Get session from token
 $session = getSessionByToken($db, $token);
-if (!$session) die("Session not found or expired");
+if (!$session) {
+    die("Session not found or expired");
+}
 
 $session_id = $session['id'];
 
-// 2. PREVENT DUPLICATE
+// 2. PREVENT DUPLICATE SCAN
 $checkSql = "SELECT id FROM attendance WHERE user_id = ? AND session_id = ?";
 $checkStmt = $db->prepare($checkSql);
 $checkStmt->execute([$user_id, $session_id]);
@@ -50,13 +37,12 @@ if ($checkStmt->fetch()) {
     die("⚠️ You already scanned this session");
 }
 
-// 3. INSERT
-$module_id = $session['module_id'];
+// 3. INSERT ATTENDANCE (CORRIGÉ)
+$sql = "INSERT INTO attendance (user_id, session_id, status, scaned_at)
+        VALUES (?, ?, 'present', NOW())";
 
-$sql = "INSERT INTO attendance (user_id, session_id, module_id, scaned_at)
-        VALUES (?, ?, ?, NOW())";
 $stmt = $db->prepare($sql);
-$stmt->execute([$user_id, $session_id, $module_id]);
+$stmt->execute([$user_id, $session_id]);
 
 echo "<h2>✅ Attendance recorded</h2>";
 ?>
