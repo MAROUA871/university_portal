@@ -226,8 +226,11 @@ if ($stmt) {
                 <?php endforeach; ?>
             </select>
         </form>
-
-        <table>
+        <div class="search-box">
+        <label for="searchInput">Recherche rapide</label>
+        <input type="text" id="searchInput" placeholder="🔎 Rechercher...">
+        </div>
+        <table id="dataTable">
             <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
@@ -319,6 +322,31 @@ if ($stmt) {
         </div>
     </div>
 </div>
+<script>
+document.getElementById("searchInput").addEventListener("keyup", function() {
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#dataTable tr");
 
+    rows.forEach((row, index) => {
+        if (index === 0) return;
+
+        let lastName   = row.cells[0]?.innerText.toLowerCase() || "";
+        let firstName  = row.cells[1]?.innerText.toLowerCase() || "";
+        let identifier = row.cells[2]?.innerText.toLowerCase() || "";
+        let module     = row.cells[3]?.innerText.toLowerCase() || "";
+
+        if (
+            lastName.includes(filter) ||
+            firstName.includes(filter) ||
+            identifier.includes(filter) ||
+            module.includes(filter)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+});
+</script>
 </body>
 </html>
