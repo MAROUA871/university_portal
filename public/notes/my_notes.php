@@ -88,7 +88,7 @@ if ($moyenne_generale !== null) {
 
                 <div class="pdf-title">
                     <h2>Relevé de notes</h2>
-                    <p>Université des Sciences et de la Technologie Houari Boumediene</p> </h2>
+                    <p>Université des Sciences et de la Technologie Houari Boumediene</p> 
                 </div>
 
                 <img src="../assets/logo_faculty.png" class="pdf-logo">
@@ -169,15 +169,22 @@ if ($moyenne_generale !== null) {
 function exportPDF() {
     const element = document.getElementById("pdf-content");
 
-    const options = {
-        margin: 0.3,
+    const opt = {
+        margin: [10, 10, 10, 10], // haut, gauche, bas, droite
         filename: "releve_notes.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "a4", orientation: "landscape" }
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: {
+            scale: 2,
+            useCORS: true
+        },
+        jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "landscape"
+        }
     };
 
-    html2pdf().set(options).from(element).save();
+    html2pdf().set(opt).from(element).save();
 }
 </script>
 

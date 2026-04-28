@@ -693,14 +693,20 @@ table th {
 }
 #pdf-content {
   transform-origin: top left;
-  width: 95%;
-  max-width: 1050px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 950px;
+  margin: auto;
   border: 2px solid #1f3c88;
   padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 /* infos étudiant */
 .student-info p {
   font-size: 12px;
   margin: 3px 0;
+}
+#pdf-content table {
+  width: 100%;
+  table-layout: fixed;
 }
